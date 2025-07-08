@@ -104,9 +104,9 @@ notification_list_example_data = [
             "role_id": "COMPANY_ADMIN",
             "phone_number": "234234",
             "profile_photo": None,
-            "last_name": "Bhushan",
-            "first_name": "Borse",
-            "full_name": "Borse Bhushan",
+            "last_name": "Deepak",
+            "first_name": "Sahni",
+            "full_name": "Sahni Deepak",
         },
         "notification": {
             "title": "Stock Movement",

@@ -17,8 +17,8 @@ class UserTestCase(TestCaseBase):
     @staticmethod
     def success_data():
         return {
-            "last_name": "Borse",
-            "first_name": "Bhushan",
+            "last_name": "Sahni",
+            "first_name": "Deepak",
             "email": "test.company.admin@gmail.com",
             "phone_number": "9878786565",
             "role_id": RoleEnum.COMPANY_ADMIN,
@@ -45,9 +45,9 @@ class UserTestCase(TestCaseBase):
         self.assertEqual(response_data["data"]["email"], "test.company.admin@gmail.com")
         self.assertEqual(response_data["data"]["role_id"], "COMPANY_ADMIN")
         self.assertEqual(response_data["data"]["phone_number"], 9878786565)
-        self.assertEqual(response_data["data"]["first_name"], "Bhushan")
-        self.assertEqual(response_data["data"]["last_name"], "Borse")
-        self.assertEqual(response_data["data"]["full_name"], "Bhushan Borse")
+        self.assertEqual(response_data["data"]["first_name"], "Deepak")
+        self.assertEqual(response_data["data"]["last_name"], "Sahni")
+        self.assertEqual(response_data["data"]["full_name"], "Deepak Sahni")
         self.assertIsNone(response_data["data"]["profile_photo"])
         self.assertIn("user_id", response_data["data"])
 
@@ -56,8 +56,8 @@ class UserTestCase(TestCaseBase):
     @staticmethod
     def duplicate_and_invalid_role_data():
         return {
-            "last_name": "Borse",
-            "first_name": "Bhushan",
+            "last_name": "Sahni",
+            "first_name": "Deepak",
             "email": "test.company.admin@gmail.com",
             "phone_number": "9878786565",
             "role_id": RoleEnum.OPERATOR,
@@ -180,9 +180,9 @@ class UserTestCase(TestCaseBase):
         self.assertEqual(user["email"], "test.company.admin@gmail.com")
         self.assertEqual(user["role_id"], "COMPANY_ADMIN")
         self.assertEqual(user["phone_number"], "9878786565")
-        self.assertEqual(user["first_name"], "Bhushan")
-        self.assertEqual(user["last_name"], "Borse")
-        self.assertEqual(user["full_name"], "Bhushan Borse")
+        self.assertEqual(user["first_name"], "Deepak")
+        self.assertEqual(user["last_name"], "Sahni")
+        self.assertEqual(user["full_name"], "Deepak Sahni")
         self.assertIsNone(user["profile_photo"])
         self.assertIn("user_id", user)
 

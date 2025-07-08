@@ -1,12 +1,12 @@
 {
     "data": [
         {
-            "last_name": "Borse",
-            "first_name": "Bhushan",
+            "last_name": "Sahni",
+            "first_name": "Deepak",
             "password": "1234",
             "phone_number": "9878786565",
             "role_id": "SUPER_ADMIN",
-            "email": "borsebhushan216@gmail.com"
+            "email": "SahniDeepak216@gmail.com"
         }
     ]
 }

@@ -12,8 +12,8 @@ def create_super_admin_test_user():
     _user_manager = user_manager.disable_tenant_aware()
     user = _user_manager.upsert(
         data={
-            "last_name": "Borse",
-            "first_name": "Bhushan",
+            "last_name": "Sahni",
+            "first_name": "Deepak",
             "phone_number": "9878786565",
             "role_id": RoleEnum.SUPER_ADMIN,
             "email": "test.super.admin@gmail.com",

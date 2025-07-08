@@ -164,9 +164,9 @@ class SuperAdminAuthTestCase(TestCaseBase):
         self.assertEqual(response_data["data"]["email"], "test.super.admin@gmail.com")
         self.assertEqual(response_data["data"]["role_id"], "SUPER_ADMIN")
         self.assertEqual(response_data["data"]["phone_number"], "9878786565")
-        self.assertEqual(response_data["data"]["first_name"], "Bhushan")
-        self.assertEqual(response_data["data"]["last_name"], "Borse")
-        self.assertEqual(response_data["data"]["full_name"], "Bhushan Borse")
+        self.assertEqual(response_data["data"]["first_name"], "Deepak")
+        self.assertEqual(response_data["data"]["last_name"], "Sahni")
+        self.assertEqual(response_data["data"]["full_name"], "Deepak Sahni")
         self.assertIsNone(response_data["data"]["profile_photo"])
         self.assertIn("user_id", response_data["data"])
 

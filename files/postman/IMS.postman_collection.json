@@ -33,7 +33,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"username\": \"helloborse@gmail.com\",\n    // \"username\": \"borsebhushan216@gmail.com\",\n    \"password\": \"1234\"\n}",
+							"raw": "{\n    \"username\": \"helloSahni@gmail.com\",\n    // \"username\": \"SahniDeepak216@gmail.com\",\n    \"password\": \"1234\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -59,7 +59,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"username\": \"helloborse@gmail.com\",\n    // \"username\": \"borsebhushan216@gmail.com\",\n    \"password\": \"1234\"\n}",
+									"raw": "{\n    \"username\": \"helloSahni@gmail.com\",\n    // \"username\": \"SahniDeepak216@gmail.com\",\n    \"password\": \"1234\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -159,7 +159,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"username\": \"borsebhushan216@gmail.com\",\n    \"password\": \"1234\"\n}",
+							"raw": "{\n    \"username\": \"SahniDeepak216@gmail.com\",\n    \"password\": \"1234\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -186,7 +186,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"username\": \"borsebhushan216@gmail.com\",\n    \"password\": \"1234\"\n}",
+									"raw": "{\n    \"username\": \"SahniDeepak216@gmail.com\",\n    \"password\": \"1234\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -270,7 +270,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"username\": \"borsebhushan216@gmail.com\",\n    \"password\": \"Bhushan@123\"\n}"
+							"raw": "{\n    \"username\": \"SahniDeepak216@gmail.com\",\n    \"password\": \"Deepak@123\"\n}"
 						},
 						"url": {
 							"raw": "{{api_host}}/auth/logout",
@@ -291,7 +291,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"username\": \"borsebhushan216@gmail.com\",\n    \"password\": \"Bhushan@123\"\n}"
+									"raw": "{\n    \"username\": \"SahniDeepak216@gmail.com\",\n    \"password\": \"Deepak@123\"\n}"
 								},
 								"url": {
 									"raw": "{{api_host}}/auth/logout",
@@ -369,7 +369,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"username\": \"borsebhushan216@gmail.com\",\n    \"password\": \"Bhushan@123\"\n}"
+							"raw": "{\n    \"username\": \"SahniDeepak216@gmail.com\",\n    \"password\": \"Deepak@123\"\n}"
 						},
 						"url": {
 							"raw": "{{api_host}}/auth/admin/logout",
@@ -391,7 +391,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"username\": \"borsebhushan216@gmail.com\",\n    \"password\": \"Bhushan@123\"\n}"
+									"raw": "{\n    \"username\": \"SahniDeepak216@gmail.com\",\n    \"password\": \"Deepak@123\"\n}"
 								},
 								"url": {
 									"raw": "{{api_host}}/auth/admin/logout",
@@ -1072,7 +1072,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"username\": \"borsebhushan216@gmail.com\",\n    \"password\": \"Bhushan@123\"\n}"
+							"raw": "{\n    \"username\": \"SahniDeepak216@gmail.com\",\n    \"password\": \"Deepak@123\"\n}"
 						},
 						"url": {
 							"raw": "{{host}}/tenant",
@@ -1092,7 +1092,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"username\": \"borsebhushan216@gmail.com\",\n    \"password\": \"Bhushan@123\"\n}"
+									"raw": "{\n    \"username\": \"SahniDeepak216@gmail.com\",\n    \"password\": \"Deepak@123\"\n}"
 								},
 								"url": {
 									"raw": "{{host}}/tenant",
@@ -1172,7 +1172,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"username\": \"borsebhushan216@gmail.com\",\n    \"password\": \"Bhushan@123\"\n}"
+							"raw": "{\n    \"username\": \"SahniDeepak216@gmail.com\",\n    \"password\": \"Deepak@123\"\n}"
 						},
 						"url": {
 							"raw": "{{host}}/tenant/:tenant_id",
@@ -1199,7 +1199,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"username\": \"borsebhushan216@gmail.com\",\n    \"password\": \"Bhushan@123\"\n}"
+									"raw": "{\n    \"username\": \"SahniDeepak216@gmail.com\",\n    \"password\": \"Deepak@123\"\n}"
 								},
 								"url": {
 									"raw": "{{host}}/tenant/:tenant_id",
@@ -1769,7 +1769,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"email\": \"helloborse@gmail.com\",\n    \"profile_photo\": null,\n    \"phone_number\": \"234234\",\n    \"role_id\": \"COMPANY_ADMIN\",\n    \"last_name\": \"bhushan\",\n    \"first_name\": \"borse\",\n    \"password\": \"1234\",\n    \"tenant_id\": \"{{tenant_id}}\"\n}",
+									"raw": "{\n    \"email\": \"helloSahni@gmail.com\",\n    \"profile_photo\": null,\n    \"phone_number\": \"234234\",\n    \"role_id\": \"COMPANY_ADMIN\",\n    \"last_name\": \"Deepak\",\n    \"first_name\": \"Sahni\",\n    \"password\": \"1234\",\n    \"tenant_id\": \"{{tenant_id}}\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1795,7 +1795,7 @@
 										"header": [],
 										"body": {
 											"mode": "raw",
-											"raw": "{\n    \"email\": \"helloborse@gmail.com\",\n    \"profile_photo\": null,\n    \"phone_number\": \"234234\",\n    \"role_id\": \"COMPANY_ADMIN\",\n    \"last_name\": \"bhushan\",\n    \"first_name\": \"borse\",\n    \"password\": \"1234\",\n    \"tenant_id\": \"{{tenant_id}}\"\n}",
+											"raw": "{\n    \"email\": \"helloSahni@gmail.com\",\n    \"profile_photo\": null,\n    \"phone_number\": \"234234\",\n    \"role_id\": \"COMPANY_ADMIN\",\n    \"last_name\": \"Deepak\",\n    \"first_name\": \"Sahni\",\n    \"password\": \"1234\",\n    \"tenant_id\": \"{{tenant_id}}\"\n}",
 											"options": {
 												"raw": {
 													"language": "json"
@@ -1867,7 +1867,7 @@
 										}
 									],
 									"cookie": [],
-									"body": "{\n    \"data\": {\n        \"email\": \"helloborse@gmail.com\",\n        \"user_id\": \"c5781cb0-05af-448a-9eb7-000c5718c7c2\",\n        \"role_id\": \"COMPANY_ADMIN\",\n        \"phone_number\": 234234,\n        \"profile_photo\": null,\n        \"last_name\": \"Bhushan\",\n        \"first_name\": \"Borse\",\n        \"full_name\": \"Borse Bhushan\"\n    },\n    \"errors\": null,\n    \"messages\": {\n        \"message\": \"Created Successfully.\"\n    },\n    \"status_code\": 201,\n    \"is_success\": true\n}"
+									"body": "{\n    \"data\": {\n        \"email\": \"helloSahni@gmail.com\",\n        \"user_id\": \"c5781cb0-05af-448a-9eb7-000c5718c7c2\",\n        \"role_id\": \"COMPANY_ADMIN\",\n        \"phone_number\": 234234,\n        \"profile_photo\": null,\n        \"last_name\": \"Deepak\",\n        \"first_name\": \"Sahni\",\n        \"full_name\": \"Sahni Deepak\"\n    },\n    \"errors\": null,\n    \"messages\": {\n        \"message\": \"Created Successfully.\"\n    },\n    \"status_code\": 201,\n    \"is_success\": true\n}"
 								}
 							]
 						},
@@ -1991,7 +1991,7 @@
 										}
 									],
 									"cookie": [],
-									"body": "{\n    \"data\": {\n        \"list\": [\n            {\n                \"email\": \"helloborse@gmail.com\",\n                \"user_id\": \"c5781cb0-05af-448a-9eb7-000c5718c7c2\",\n                \"role_id\": \"COMPANY_ADMIN\",\n                \"phone_number\": \"234234\",\n                \"profile_photo\": null,\n                \"last_name\": \"Bhushan\",\n                \"first_name\": \"Borse\",\n                \"full_name\": \"Borse Bhushan\"\n            }\n        ],\n        \"pagination\": {\n            \"count\": 1,\n            \"page_size\": 10,\n            \"current_page\": 1,\n            \"total_pages\": 1\n        }\n    },\n    \"errors\": null,\n    \"messages\": null,\n    \"status_code\": 200,\n    \"is_success\": true\n}"
+									"body": "{\n    \"data\": {\n        \"list\": [\n            {\n                \"email\": \"helloSahni@gmail.com\",\n                \"user_id\": \"c5781cb0-05af-448a-9eb7-000c5718c7c2\",\n                \"role_id\": \"COMPANY_ADMIN\",\n                \"phone_number\": \"234234\",\n                \"profile_photo\": null,\n                \"last_name\": \"Deepak\",\n                \"first_name\": \"Sahni\",\n                \"full_name\": \"Sahni Deepak\"\n            }\n        ],\n        \"pagination\": {\n            \"count\": 1,\n            \"page_size\": 10,\n            \"current_page\": 1,\n            \"total_pages\": 1\n        }\n    },\n    \"errors\": null,\n    \"messages\": null,\n    \"status_code\": 200,\n    \"is_success\": true\n}"
 								}
 							]
 						}
@@ -2007,7 +2007,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"username\": \"borsebhushan216@gmail.com\",\n    \"password\": \"Bhushan@123\"\n}"
+							"raw": "{\n    \"username\": \"SahniDeepak216@gmail.com\",\n    \"password\": \"Deepak@123\"\n}"
 						},
 						"url": {
 							"raw": "{{api_host}}/user",
@@ -2027,7 +2027,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"username\": \"borsebhushan216@gmail.com\",\n    \"password\": \"Bhushan@123\"\n}"
+									"raw": "{\n    \"username\": \"SahniDeepak216@gmail.com\",\n    \"password\": \"Deepak@123\"\n}"
 								},
 								"url": {
 									"raw": "{{api_host}}/user",
@@ -2093,7 +2093,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"data\": {\n        \"list\": [\n            {\n                \"email\": \"helloborse@gmail.com\",\n                \"user_id\": \"c5781cb0-05af-448a-9eb7-000c5718c7c2\",\n                \"role_id\": \"COMPANY_ADMIN\",\n                \"phone_number\": \"234234\",\n                \"profile_photo\": null,\n                \"last_name\": \"Bhushan\",\n                \"first_name\": \"Borse\",\n                \"full_name\": \"Borse Bhushan\"\n            }\n        ],\n        \"pagination\": {\n            \"count\": 1,\n            \"page_size\": 10,\n            \"current_page\": 1,\n            \"total_pages\": 1\n        }\n    },\n    \"errors\": null,\n    \"messages\": null,\n    \"status_code\": 200,\n    \"is_success\": true\n}"
+							"body": "{\n    \"data\": {\n        \"list\": [\n            {\n                \"email\": \"helloSahni@gmail.com\",\n                \"user_id\": \"c5781cb0-05af-448a-9eb7-000c5718c7c2\",\n                \"role_id\": \"COMPANY_ADMIN\",\n                \"phone_number\": \"234234\",\n                \"profile_photo\": null,\n                \"last_name\": \"Deepak\",\n                \"first_name\": \"Sahni\",\n                \"full_name\": \"Sahni Deepak\"\n            }\n        ],\n        \"pagination\": {\n            \"count\": 1,\n            \"page_size\": 10,\n            \"current_page\": 1,\n            \"total_pages\": 1\n        }\n    },\n    \"errors\": null,\n    \"messages\": null,\n    \"status_code\": 200,\n    \"is_success\": true\n}"
 						}
 					]
 				},
@@ -2107,7 +2107,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"username\": \"borsebhushan216@gmail.com\",\n    \"password\": \"Bhushan@123\"\n}"
+							"raw": "{\n    \"username\": \"SahniDeepak216@gmail.com\",\n    \"password\": \"Deepak@123\"\n}"
 						},
 						"url": {
 							"raw": "{{api_host}}/user/:user_id",
@@ -2134,7 +2134,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"username\": \"borsebhushan216@gmail.com\",\n    \"password\": \"Bhushan@123\"\n}"
+									"raw": "{\n    \"username\": \"SahniDeepak216@gmail.com\",\n    \"password\": \"Deepak@123\"\n}"
 								},
 								"url": {
 									"raw": "{{api_host}}/user/:user_id",
@@ -2207,7 +2207,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"data\": {\n        \"email\": \"helloborse@gmail.com\",\n        \"user_id\": \"c5781cb0-05af-448a-9eb7-000c5718c7c2\",\n        \"role_id\": \"COMPANY_ADMIN\",\n        \"phone_number\": \"234234\",\n        \"profile_photo\": null,\n        \"last_name\": \"Bhushan\",\n        \"first_name\": \"Borse\",\n        \"full_name\": \"Borse Bhushan\"\n    },\n    \"errors\": null,\n    \"messages\": null,\n    \"status_code\": 200,\n    \"is_success\": true\n}"
+							"body": "{\n    \"data\": {\n        \"email\": \"helloSahni@gmail.com\",\n        \"user_id\": \"c5781cb0-05af-448a-9eb7-000c5718c7c2\",\n        \"role_id\": \"COMPANY_ADMIN\",\n        \"phone_number\": \"234234\",\n        \"profile_photo\": null,\n        \"last_name\": \"Deepak\",\n        \"first_name\": \"Sahni\",\n        \"full_name\": \"Sahni Deepak\"\n    },\n    \"errors\": null,\n    \"messages\": null,\n    \"status_code\": 200,\n    \"is_success\": true\n}"
 						}
 					]
 				},
@@ -2218,7 +2218,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\": \"test@gmail.com\",\n    \"profile_photo\": null,\n    \"phone_number\": \"234234\",\n    \"role_id\": \"OPERATOR\",\n    \"last_name\": \"bhushan\",\n    \"first_name\": \"borse\",\n    \"password\": \"1234\"\n}",
+							"raw": "{\n    \"email\": \"test@gmail.com\",\n    \"profile_photo\": null,\n    \"phone_number\": \"234234\",\n    \"role_id\": \"OPERATOR\",\n    \"last_name\": \"Deepak\",\n    \"first_name\": \"Sahni\",\n    \"password\": \"1234\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2243,7 +2243,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"email\": \"test@gmail.com\",\n    \"profile_photo\": null,\n    \"phone_number\": \"234234\",\n    \"role_id\": \"OPERATOR\",\n    \"last_name\": \"bhushan\",\n    \"first_name\": \"borse\",\n    \"password\": \"1234\"\n}",
+									"raw": "{\n    \"email\": \"test@gmail.com\",\n    \"profile_photo\": null,\n    \"phone_number\": \"234234\",\n    \"role_id\": \"OPERATOR\",\n    \"last_name\": \"Deepak\",\n    \"first_name\": \"Sahni\",\n    \"password\": \"1234\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -2314,7 +2314,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"data\": {\n        \"email\": \"test@gmail.com\",\n        \"user_id\": \"7a0ed893-52ab-419c-aa2d-db775cf25eb4\",\n        \"role_id\": \"OPERATOR\",\n        \"phone_number\": 234234,\n        \"profile_photo\": null,\n        \"last_name\": \"Bhushan\",\n        \"first_name\": \"Borse\",\n        \"full_name\": \"Borse Bhushan\"\n    },\n    \"errors\": null,\n    \"messages\": {\n        \"message\": \"Created Successfully.\"\n    },\n    \"status_code\": 201,\n    \"is_success\": true\n}"
+							"body": "{\n    \"data\": {\n        \"email\": \"test@gmail.com\",\n        \"user_id\": \"7a0ed893-52ab-419c-aa2d-db775cf25eb4\",\n        \"role_id\": \"OPERATOR\",\n        \"phone_number\": 234234,\n        \"profile_photo\": null,\n        \"last_name\": \"Deepak\",\n        \"first_name\": \"Sahni\",\n        \"full_name\": \"Sahni Deepak\"\n    },\n    \"errors\": null,\n    \"messages\": {\n        \"message\": \"Created Successfully.\"\n    },\n    \"status_code\": 201,\n    \"is_success\": true\n}"
 						}
 					]
 				},
@@ -2325,7 +2325,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\": \"test@gmail.com\",\n    \"profile_photo\": null,\n    \"phone_number\": \"234234\",\n    \"role_id\": \"OPERATOR\",\n    \"last_name\": \"bhushan\",\n    \"first_name\": \"borse\",\n    \"password\": \"1234\"\n}",
+							"raw": "{\n    \"email\": \"test@gmail.com\",\n    \"profile_photo\": null,\n    \"phone_number\": \"234234\",\n    \"role_id\": \"OPERATOR\",\n    \"last_name\": \"Deepak\",\n    \"first_name\": \"Sahni\",\n    \"password\": \"1234\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2357,7 +2357,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"email\": \"test@gmail.com\",\n    \"profile_photo\": null,\n    \"phone_number\": \"234234\",\n    \"role_id\": \"OPERATOR\",\n    \"last_name\": \"bhushan\",\n    \"first_name\": \"borse\",\n    \"password\": \"1234\"\n}",
+									"raw": "{\n    \"email\": \"test@gmail.com\",\n    \"profile_photo\": null,\n    \"phone_number\": \"234234\",\n    \"role_id\": \"OPERATOR\",\n    \"last_name\": \"Deepak\",\n    \"first_name\": \"Sahni\",\n    \"password\": \"1234\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -2435,7 +2435,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"data\": {\n        \"email\": \"test@gmail.com\",\n        \"user_id\": \"7a0ed893-52ab-419c-aa2d-db775cf25eb4\",\n        \"role_id\": \"OPERATOR\",\n        \"phone_number\": 234234,\n        \"profile_photo\": null,\n        \"last_name\": \"Bhushan\",\n        \"first_name\": \"Borse\",\n        \"full_name\": \"Borse Bhushan\"\n    },\n    \"errors\": null,\n    \"messages\": {\n        \"message\": \"Updated Successfully.\"\n    },\n    \"status_code\": 200,\n    \"is_success\": true\n}"
+							"body": "{\n    \"data\": {\n        \"email\": \"test@gmail.com\",\n        \"user_id\": \"7a0ed893-52ab-419c-aa2d-db775cf25eb4\",\n        \"role_id\": \"OPERATOR\",\n        \"phone_number\": 234234,\n        \"profile_photo\": null,\n        \"last_name\": \"Deepak\",\n        \"first_name\": \"Sahni\",\n        \"full_name\": \"Sahni Deepak\"\n    },\n    \"errors\": null,\n    \"messages\": {\n        \"message\": \"Updated Successfully.\"\n    },\n    \"status_code\": 200,\n    \"is_success\": true\n}"
 						}
 					]
 				},
@@ -2556,7 +2556,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"data\": {\n        \"email\": \"test@gmail.com\",\n        \"user_id\": \"7a0ed893-52ab-419c-aa2d-db775cf25eb4\",\n        \"role_id\": \"OPERATOR\",\n        \"phone_number\": \"234234\",\n        \"profile_photo\": null,\n        \"last_name\": \"Bhushan\",\n        \"first_name\": \"Borse\",\n        \"full_name\": \"Borse Bhushan\"\n    },\n    \"errors\": null,\n    \"messages\": {\n        \"message\": \"Updated Successfully.\"\n    },\n    \"status_code\": 200,\n    \"is_success\": true\n}"
+							"body": "{\n    \"data\": {\n        \"email\": \"test@gmail.com\",\n        \"user_id\": \"7a0ed893-52ab-419c-aa2d-db775cf25eb4\",\n        \"role_id\": \"OPERATOR\",\n        \"phone_number\": \"234234\",\n        \"profile_photo\": null,\n        \"last_name\": \"Deepak\",\n        \"first_name\": \"Sahni\",\n        \"full_name\": \"Sahni Deepak\"\n    },\n    \"errors\": null,\n    \"messages\": {\n        \"message\": \"Updated Successfully.\"\n    },\n    \"status_code\": 200,\n    \"is_success\": true\n}"
 						}
 					]
 				},
@@ -2769,7 +2769,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"data\": {\n        \"email\": \"helloborse@gmail.com\",\n        \"user_id\": \"c5781cb0-05af-448a-9eb7-000c5718c7c2\",\n        \"role_id\": \"COMPANY_ADMIN\",\n        \"phone_number\": \"234234\",\n        \"profile_photo\": null,\n        \"last_name\": \"Bhushan\",\n        \"first_name\": \"Borse\",\n        \"full_name\": \"Borse Bhushan\"\n    },\n    \"errors\": null,\n    \"messages\": null,\n    \"status_code\": 200,\n    \"is_success\": true\n}"
+							"body": "{\n    \"data\": {\n        \"email\": \"helloSahni@gmail.com\",\n        \"user_id\": \"c5781cb0-05af-448a-9eb7-000c5718c7c2\",\n        \"role_id\": \"COMPANY_ADMIN\",\n        \"phone_number\": \"234234\",\n        \"profile_photo\": null,\n        \"last_name\": \"Deepak\",\n        \"first_name\": \"Sahni\",\n        \"full_name\": \"Sahni Deepak\"\n    },\n    \"errors\": null,\n    \"messages\": null,\n    \"status_code\": 200,\n    \"is_success\": true\n}"
 						}
 					]
 				},
@@ -2862,7 +2862,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"data\": {\n        \"email\": \"borsebhushan216@gmail.com\",\n        \"user_id\": \"45a06230-0ab0-437c-a1a0-1c57e9eca506\",\n        \"role_id\": \"SUPER_ADMIN\",\n        \"phone_number\": \"9878786565\",\n        \"profile_photo\": null,\n        \"last_name\": \"Borse\",\n        \"first_name\": \"Bhushan\",\n        \"full_name\": \"Bhushan Borse\"\n    },\n    \"errors\": null,\n    \"messages\": null,\n    \"status_code\": 200,\n    \"is_success\": true\n}"
+							"body": "{\n    \"data\": {\n        \"email\": \"SahniDeepak216@gmail.com\",\n        \"user_id\": \"45a06230-0ab0-437c-a1a0-1c57e9eca506\",\n        \"role_id\": \"SUPER_ADMIN\",\n        \"phone_number\": \"9878786565\",\n        \"profile_photo\": null,\n        \"last_name\": \"Sahni\",\n        \"first_name\": \"Deepak\",\n        \"full_name\": \"Deepak Sahni\"\n    },\n    \"errors\": null,\n    \"messages\": null,\n    \"status_code\": 200,\n    \"is_success\": true\n}"
 						}
 					]
 				}
@@ -2882,7 +2882,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"username\": \"borsebhushan216@gmail.com\",\n    \"password\": \"Bhushan@123\"\n}"
+							"raw": "{\n    \"username\": \"SahniDeepak216@gmail.com\",\n    \"password\": \"Deepak@123\"\n}"
 						},
 						"url": {
 							"raw": "{{api_host}}/category",
@@ -2902,7 +2902,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"username\": \"borsebhushan216@gmail.com\",\n    \"password\": \"Bhushan@123\"\n}"
+									"raw": "{\n    \"username\": \"SahniDeepak216@gmail.com\",\n    \"password\": \"Deepak@123\"\n}"
 								},
 								"url": {
 									"raw": "{{api_host}}/category",
@@ -2982,7 +2982,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"username\": \"borsebhushan216@gmail.com\",\n    \"password\": \"Bhushan@123\"\n}"
+							"raw": "{\n    \"username\": \"SahniDeepak216@gmail.com\",\n    \"password\": \"Deepak@123\"\n}"
 						},
 						"url": {
 							"raw": "{{api_host}}/category/:category_id",
@@ -3009,7 +3009,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"username\": \"borsebhushan216@gmail.com\",\n    \"password\": \"Bhushan@123\"\n}"
+									"raw": "{\n    \"username\": \"SahniDeepak216@gmail.com\",\n    \"password\": \"Deepak@123\"\n}"
 								},
 								"url": {
 									"raw": "{{api_host}}/category/:category_id",
@@ -3561,7 +3561,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"username\": \"borsebhushan216@gmail.com\",\n    \"password\": \"Bhushan@123\"\n}"
+							"raw": "{\n    \"username\": \"SahniDeepak216@gmail.com\",\n    \"password\": \"Deepak@123\"\n}"
 						},
 						"url": {
 							"raw": "{{api_host}}/product",
@@ -3581,7 +3581,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"username\": \"borsebhushan216@gmail.com\",\n    \"password\": \"Bhushan@123\"\n}"
+									"raw": "{\n    \"username\": \"SahniDeepak216@gmail.com\",\n    \"password\": \"Deepak@123\"\n}"
 								},
 								"url": {
 									"raw": "{{api_host}}/product",
@@ -3661,7 +3661,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"username\": \"borsebhushan216@gmail.com\",\n    \"password\": \"Bhushan@123\"\n}"
+							"raw": "{\n    \"username\": \"SahniDeepak216@gmail.com\",\n    \"password\": \"Deepak@123\"\n}"
 						},
 						"url": {
 							"raw": "{{api_host}}/product/:product_id",
@@ -3688,7 +3688,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"username\": \"borsebhushan216@gmail.com\",\n    \"password\": \"Bhushan@123\"\n}"
+									"raw": "{\n    \"username\": \"SahniDeepak216@gmail.com\",\n    \"password\": \"Deepak@123\"\n}"
 								},
 								"url": {
 									"raw": "{{api_host}}/product/:product_id",
@@ -4240,7 +4240,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"username\": \"borsebhushan216@gmail.com\",\n    \"password\": \"Bhushan@123\"\n}"
+							"raw": "{\n    \"username\": \"SahniDeepak216@gmail.com\",\n    \"password\": \"Deepak@123\"\n}"
 						},
 						"url": {
 							"raw": "{{api_host}}/supplier",
@@ -4260,7 +4260,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"username\": \"borsebhushan216@gmail.com\",\n    \"password\": \"Bhushan@123\"\n}"
+									"raw": "{\n    \"username\": \"SahniDeepak216@gmail.com\",\n    \"password\": \"Deepak@123\"\n}"
 								},
 								"url": {
 									"raw": "{{api_host}}/supplier",
@@ -4340,7 +4340,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"username\": \"borsebhushan216@gmail.com\",\n    \"password\": \"Bhushan@123\"\n}"
+							"raw": "{\n    \"username\": \"SahniDeepak216@gmail.com\",\n    \"password\": \"Deepak@123\"\n}"
 						},
 						"url": {
 							"raw": "{{api_host}}/supplier/:supplier_id",
@@ -4367,7 +4367,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"username\": \"borsebhushan216@gmail.com\",\n    \"password\": \"Bhushan@123\"\n}"
+									"raw": "{\n    \"username\": \"SahniDeepak216@gmail.com\",\n    \"password\": \"Deepak@123\"\n}"
 								},
 								"url": {
 									"raw": "{{api_host}}/supplier/:supplier_id",
@@ -4920,7 +4920,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"username\": \"borsebhushan216@gmail.com\",\n    \"password\": \"Bhushan@123\"\n}"
+							"raw": "{\n    \"username\": \"SahniDeepak216@gmail.com\",\n    \"password\": \"Deepak@123\"\n}"
 						},
 						"url": {
 							"raw": "{{api_host}}/stock",
@@ -4940,7 +4940,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"username\": \"borsebhushan216@gmail.com\",\n    \"password\": \"Bhushan@123\"\n}"
+									"raw": "{\n    \"username\": \"SahniDeepak216@gmail.com\",\n    \"password\": \"Deepak@123\"\n}"
 								},
 								"url": {
 									"raw": "{{api_host}}/stock",
@@ -5020,7 +5020,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"username\": \"borsebhushan216@gmail.com\",\n    \"password\": \"Bhushan@123\"\n}"
+							"raw": "{\n    \"username\": \"SahniDeepak216@gmail.com\",\n    \"password\": \"Deepak@123\"\n}"
 						},
 						"url": {
 							"raw": "{{api_host}}/stock/:stock_id",
@@ -5047,7 +5047,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"username\": \"borsebhushan216@gmail.com\",\n    \"password\": \"Bhushan@123\"\n}"
+									"raw": "{\n    \"username\": \"SahniDeepak216@gmail.com\",\n    \"password\": \"Deepak@123\"\n}"
 								},
 								"url": {
 									"raw": "{{api_host}}/stock/:stock_id",
@@ -5438,7 +5438,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"username\": \"borsebhushan216@gmail.com\",\n    \"password\": \"Bhushan@123\"\n}"
+							"raw": "{\n    \"username\": \"SahniDeepak216@gmail.com\",\n    \"password\": \"Deepak@123\"\n}"
 						},
 						"url": {
 							"raw": "{{host}}/health",
@@ -5458,7 +5458,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"username\": \"borsebhushan216@gmail.com\",\n    \"password\": \"Bhushan@123\"\n}"
+									"raw": "{\n    \"username\": \"SahniDeepak216@gmail.com\",\n    \"password\": \"Deepak@123\"\n}"
 								},
 								"url": {
 									"raw": "{{host}}/health",
@@ -5648,7 +5648,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"username\": \"borsebhushan216@gmail.com\",\n    \"password\": \"Bhushan@123\"\n}"
+							"raw": "{\n    \"username\": \"SahniDeepak216@gmail.com\",\n    \"password\": \"Deepak@123\"\n}"
 						},
 						"url": {
 							"raw": "{{api_host}}/role-permission",
@@ -5668,7 +5668,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"username\": \"borsebhushan216@gmail.com\",\n    \"password\": \"Bhushan@123\"\n}"
+									"raw": "{\n    \"username\": \"SahniDeepak216@gmail.com\",\n    \"password\": \"Deepak@123\"\n}"
 								},
 								"url": {
 									"raw": "{{api_host}}/role-permission",
@@ -5982,7 +5982,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"username\": \"borsebhushan216@gmail.com\",\n    \"password\": \"Bhushan@123\"\n}"
+							"raw": "{\n    \"username\": \"SahniDeepak216@gmail.com\",\n    \"password\": \"Deepak@123\"\n}"
 						},
 						"url": {
 							"raw": "{{api_host}}/notification",
@@ -6002,7 +6002,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"username\": \"borsebhushan216@gmail.com\",\n    \"password\": \"Bhushan@123\"\n}"
+									"raw": "{\n    \"username\": \"SahniDeepak216@gmail.com\",\n    \"password\": \"Deepak@123\"\n}"
 								},
 								"url": {
 									"raw": "{{api_host}}/notification",
@@ -6068,7 +6068,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"data\": {\n        \"list\": [\n            {\n                \"created_dtm\": \"2025-06-16T09:43:54.691998Z\",\n                \"sent_by\": {\n                    \"email\": \"helloborse@gmail.com\",\n                    \"user_id\": \"c5781cb0-05af-448a-9eb7-000c5718c7c2\",\n                    \"role_id\": \"COMPANY_ADMIN\",\n                    \"phone_number\": \"234234\",\n                    \"profile_photo\": null,\n                    \"last_name\": \"Bhushan\",\n                    \"first_name\": \"Borse\",\n                    \"full_name\": \"Borse Bhushan\"\n                },\n                \"notification\": {\n                    \"title\": \"Stock Movement\",\n                    \"message\": \"Stock(IN:2F54D807) has been In. The quantity is 20.\",\n                    \"created_by\": \"c5781cb0-05af-448a-9eb7-000c5718c7c2\",\n                    \"notification_id\": \"36e50232-9f67-400e-af92-9ded08b3c636\",\n                    \"notification_type\": \"STOCK_IN\",\n                    \"notification_data\": {\n                        \"stock_id\": \"efbff8c4-21bf-44ba-b20b-22f0b83bdef6\"\n                    }\n                }\n            },\n            {\n                \"created_dtm\": \"2025-06-16T09:44:25.868415Z\",\n                \"sent_by\": {\n                    \"email\": \"helloborse@gmail.com\",\n                    \"user_id\": \"c5781cb0-05af-448a-9eb7-000c5718c7c2\",\n                    \"role_id\": \"COMPANY_ADMIN\",\n                    \"phone_number\": \"234234\",\n                    \"profile_photo\": null,\n                    \"last_name\": \"Bhushan\",\n                    \"first_name\": \"Borse\",\n                    \"full_name\": \"Borse Bhushan\"\n                },\n                \"notification\": {\n                    \"title\": \"Stock Movement\",\n                    \"message\": \"Stock(OUT:8E056B11) has been Out. The quantity is 10.\",\n                    \"created_by\": \"c5781cb0-05af-448a-9eb7-000c5718c7c2\",\n                    \"notification_id\": \"71769fc4-b3c1-47e8-88cc-4f9955e77153\",\n                    \"notification_type\": \"STOCK_OUT\",\n                    \"notification_data\": {\n                        \"stock_id\": \"1d94fdc5-5095-4b7b-b2d0-1a6bbaed95c4\"\n                    }\n                }\n            }\n        ],\n        \"pagination\": {\n            \"count\": 2,\n            \"page_size\": 10,\n            \"current_page\": 1,\n            \"total_pages\": 1\n        }\n    },\n    \"errors\": null,\n    \"messages\": null,\n    \"status_code\": 200,\n    \"is_success\": true\n}"
+							"body": "{\n    \"data\": {\n        \"list\": [\n            {\n                \"created_dtm\": \"2025-06-16T09:43:54.691998Z\",\n                \"sent_by\": {\n                    \"email\": \"helloSahni@gmail.com\",\n                    \"user_id\": \"c5781cb0-05af-448a-9eb7-000c5718c7c2\",\n                    \"role_id\": \"COMPANY_ADMIN\",\n                    \"phone_number\": \"234234\",\n                    \"profile_photo\": null,\n                    \"last_name\": \"Deepak\",\n                    \"first_name\": \"Sahni\",\n                    \"full_name\": \"Sahni Deepak\"\n                },\n                \"notification\": {\n                    \"title\": \"Stock Movement\",\n                    \"message\": \"Stock(IN:2F54D807) has been In. The quantity is 20.\",\n                    \"created_by\": \"c5781cb0-05af-448a-9eb7-000c5718c7c2\",\n                    \"notification_id\": \"36e50232-9f67-400e-af92-9ded08b3c636\",\n                    \"notification_type\": \"STOCK_IN\",\n                    \"notification_data\": {\n                        \"stock_id\": \"efbff8c4-21bf-44ba-b20b-22f0b83bdef6\"\n                    }\n                }\n            },\n            {\n                \"created_dtm\": \"2025-06-16T09:44:25.868415Z\",\n                \"sent_by\": {\n                    \"email\": \"helloSahni@gmail.com\",\n                    \"user_id\": \"c5781cb0-05af-448a-9eb7-000c5718c7c2\",\n                    \"role_id\": \"COMPANY_ADMIN\",\n                    \"phone_number\": \"234234\",\n                    \"profile_photo\": null,\n                    \"last_name\": \"Deepak\",\n                    \"first_name\": \"Sahni\",\n                    \"full_name\": \"Sahni Deepak\"\n                },\n                \"notification\": {\n                    \"title\": \"Stock Movement\",\n                    \"message\": \"Stock(OUT:8E056B11) has been Out. The quantity is 10.\",\n                    \"created_by\": \"c5781cb0-05af-448a-9eb7-000c5718c7c2\",\n                    \"notification_id\": \"71769fc4-b3c1-47e8-88cc-4f9955e77153\",\n                    \"notification_type\": \"STOCK_OUT\",\n                    \"notification_data\": {\n                        \"stock_id\": \"1d94fdc5-5095-4b7b-b2d0-1a6bbaed95c4\"\n                    }\n                }\n            }\n        ],\n        \"pagination\": {\n            \"count\": 2,\n            \"page_size\": 10,\n            \"current_page\": 1,\n            \"total_pages\": 1\n        }\n    },\n    \"errors\": null,\n    \"messages\": null,\n    \"status_code\": 200,\n    \"is_success\": true\n}"
 						}
 					]
 				},
@@ -6194,7 +6194,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\": \"helloborse@gmail.com\",\n    \"profile_photo\": null,\n    \"phone_number\": \"234234\",\n    \"role_id\": \"COMPANY_ADMIN\",\n    \"last_name\": \"bhushan\",\n    \"first_name\": \"borse\",\n    \"password\": \"1234\",\n    \"tenant_id\": \"2ded15fb-7a92-401f-b3dc-ee0467689bb8\"\n}"
+							"raw": "{\n    \"email\": \"helloSahni@gmail.com\",\n    \"profile_photo\": null,\n    \"phone_number\": \"234234\",\n    \"role_id\": \"COMPANY_ADMIN\",\n    \"last_name\": \"Deepak\",\n    \"first_name\": \"Sahni\",\n    \"password\": \"1234\",\n    \"tenant_id\": \"2ded15fb-7a92-401f-b3dc-ee0467689bb8\"\n}"
 						},
 						"url": {
 							"raw": "{{api_host}}/report/stock-summary",
@@ -6215,7 +6215,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"email\": \"helloborse@gmail.com\",\n    \"profile_photo\": null,\n    \"phone_number\": \"234234\",\n    \"role_id\": \"COMPANY_ADMIN\",\n    \"last_name\": \"bhushan\",\n    \"first_name\": \"borse\",\n    \"password\": \"1234\",\n    \"tenant_id\": \"2ded15fb-7a92-401f-b3dc-ee0467689bb8\"\n}"
+									"raw": "{\n    \"email\": \"helloSahni@gmail.com\",\n    \"profile_photo\": null,\n    \"phone_number\": \"234234\",\n    \"role_id\": \"COMPANY_ADMIN\",\n    \"last_name\": \"Deepak\",\n    \"first_name\": \"Sahni\",\n    \"password\": \"1234\",\n    \"tenant_id\": \"2ded15fb-7a92-401f-b3dc-ee0467689bb8\"\n}"
 								},
 								"url": {
 									"raw": "{{api_host}}/report/stock-summary",

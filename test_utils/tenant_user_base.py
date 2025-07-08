@@ -79,8 +79,8 @@ class TestCaseBase(CommonTestCaseAssertsBase):
 
         user = _user_manager.upsert(
             data={
-                "last_name": "Borse",
-                "first_name": "Bhushan",
+                "last_name": "Sahni",
+                "first_name": "Deepak",
                 "phone_number": "9878786565",
                 "email": "test.company.admin@gmail.com",
                 "role_id": role_id or RoleEnum.COMPANY_ADMIN,
