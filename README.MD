@@ -250,4 +250,4 @@ The system includes complete and dynamic API documentation:
 
 ## 👨‍💻 Author
 
-- 🧑‍💻 Deepak sahani
+- 🧑‍💻 Deepak sahni
