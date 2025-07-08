@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+*.log
+.vscode
+.pytest_cache
+# env.json
+static/
+staticfiles/
+media/
+*.sqlite3
+# docker_env.json
+.coverage

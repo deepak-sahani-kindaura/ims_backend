@@ -1,0 +1,4708 @@
+openapi: 3.0.3
+info:
+  title: Inventory Management System(IMS)
+  version: V0.0.0
+  description: This Django-based Inventory Management System (IMS) is a scalable,
+    multi-tenant backend application built to manage inventory operations across  multiple
+    tenants. It supports fine-grained access control, optimized API routing, and production-ready
+    deployment with Docker and Nginx.
+paths:
+  /api/audit-logs:
+    get:
+      operationId: audit_logs_retrieve
+      description: Retrieve a list of all AuditLog records.
+      parameters:
+      - in: query
+        name: is_pagination
+        schema:
+          type: boolean
+          default: true
+      - in: query
+        name: page
+        schema:
+          type: integer
+          minimum: 1
+          default: 1
+      - in: query
+        name: page_size
+        schema:
+          type: integer
+          minimum: 1
+          default: 10
+      tags:
+      - Audit Logs
+      security:
+      - TokenAuth: []
+      - TokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuditLogsListResponse'
+              examples:
+                ListAudit-Success:
+                  value:
+                    data:
+                      list:
+                      - - audit_id: e3744e32-8c42-468e-a11b-6595da3a12e1
+                          user_id: 70c2b240-27b1-4596-851b-95cb65f84842
+                          module_name: audit_logs
+                          http_method: GET
+                          request_path: /api/audit-logs
+                          client_ip: 127.0.0.1
+                          request_route: api/audit-logs
+                          client_user_agent: PostmanRuntime/7.44.0
+                          request_headers:
+                            Content-Length: '10'
+                            Content-Type: text/plain
+                            User-Agent: PostmanRuntime/7.44.0
+                            Accept: '*/*'
+                            Cache-Control: no-cache
+                            Postman-Token: 14406ac5-d700-4f76-be90-0316af10d742
+                            Host: 127.0.0.1:8000
+                            Accept-Encoding: gzip, deflate, br
+                            Connection: keep-alive
+                      pagination:
+                        count: 1
+                        page_size: 1
+                        current_page: 1
+                        total_pages: 1
+                    errors: null
+                    messages: null
+                    status_code: 200
+                    is_success: true
+                  summary: List Audit - Success
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundResponse'
+              examples:
+                404NotFound:
+                  value:
+                    data: null
+                    errors:
+                      code: NO_DATA_FOUND
+                      message: No Data Found.
+                    status_code: 404
+                    is_success: false
+                  summary: 404 Not Found
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedResponse'
+              examples:
+                401Unauthorized:
+                  value:
+                    data: null
+                    errors:
+                      code: UNAUTHORIZED
+                      message: Unauthorized Access.
+                    status_code: 401
+                    is_success: false
+                  summary: 401 Unauthorized
+          description: ''
+  /api/audit-logs/{audit_id}:
+    get:
+      operationId: audit_logs_retrieve_2
+      description: Retrieve a single AuditLog record by ID.
+      parameters:
+      - in: path
+        name: audit_id
+        schema:
+          type: string
+        required: true
+      tags:
+      - Audit Logs
+      security:
+      - TokenAuth: []
+      - TokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuditLogsResponse'
+              examples:
+                GetAuditLogsById-Success:
+                  value:
+                    data:
+                    - audit_id: e3744e32-8c42-468e-a11b-6595da3a12e1
+                      user_id: 70c2b240-27b1-4596-851b-95cb65f84842
+                      module_name: audit_logs
+                      http_method: GET
+                      request_path: /api/audit-logs
+                      client_ip: 127.0.0.1
+                      request_route: api/audit-logs
+                      client_user_agent: PostmanRuntime/7.44.0
+                      request_headers:
+                        Content-Length: '10'
+                        Content-Type: text/plain
+                        User-Agent: PostmanRuntime/7.44.0
+                        Accept: '*/*'
+                        Cache-Control: no-cache
+                        Postman-Token: 14406ac5-d700-4f76-be90-0316af10d742
+                        Host: 127.0.0.1:8000
+                        Accept-Encoding: gzip, deflate, br
+                        Connection: keep-alive
+                    errors: null
+                    messages: null
+                    status_code: 200
+                    is_success: true
+                  summary: Get Audit logs by Id - Success
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundResponse'
+              examples:
+                404NotFound:
+                  value:
+                    data: null
+                    errors:
+                      code: NO_DATA_FOUND
+                      message: No Data Found.
+                    status_code: 404
+                    is_success: false
+                  summary: 404 Not Found
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedResponse'
+              examples:
+                401Unauthorized:
+                  value:
+                    data: null
+                    errors:
+                      code: UNAUTHORIZED
+                      message: Unauthorized Access.
+                    status_code: 401
+                    is_success: false
+                  summary: 401 Unauthorized
+          description: ''
+  /api/auth/login:
+    post:
+      operationId: auth_login_create
+      description: |-
+        Handles the object creation process, including validation, data enrichment,
+        database persistence, and response generation.
+
+        Args:
+            request (Request): The HTTP request containing input data.
+
+        Returns:
+            Response: A success response with the created object(s)
+            or an error message if validation fails.
+      tags:
+      - Authentication
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Login'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Login'
+        required: true
+      security:
+      - TokenAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+              examples:
+                LoginSuccessful:
+                  value:
+                    data:
+                      token: BABD5D130CB04C05717D5D22635BBE4D
+                      created_dtm: '2025-04-18T07:25:20.135018Z'
+                    errors: null
+                    messages:
+                      message: Logged in successful.
+                    status_code: 201
+                    is_success: true
+                  summary: Login Successful
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedResponse'
+              examples:
+                401WrongCredentials:
+                  value:
+                    data: null
+                    errors:
+                      code: UNAUTHORIZED
+                      message: Unauthorized Access.
+                    status_code: 401
+                    is_success: false
+                  summary: 401 WrongCredentials
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestResponse'
+              examples:
+                400BadRequest:
+                  value:
+                    data: null
+                    errors:
+                    - code: INVALID
+                      message: Invalid data.
+                      field: field_name
+                    status_code: 400
+                    is_success: false
+                  summary: 400 Bad Request
+          description: ''
+  /api/auth/logout:
+    delete:
+      operationId: auth_logout_destroy
+      description: Handle user logout by deleting the token associated with the user.
+      tags:
+      - Authentication
+      security:
+      - TokenAuth: []
+      - TokenAuth: []
+      - {}
+      responses:
+        '204':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LogoutResponse'
+              examples:
+                LogoutSuccessful:
+                  value:
+                    data: null
+                    errors: null
+                    messages:
+                      message: Logged out successfully.
+                    status_code: 204
+                    is_success: true
+                  summary: Logout Successful
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedResponse'
+              examples:
+                401WrongCredentials:
+                  value:
+                    data: null
+                    errors:
+                      code: UNAUTHORIZED
+                      message: Unauthorized Access.
+                    status_code: 401
+                    is_success: false
+                  summary: 401 WrongCredentials
+          description: ''
+  /api/category:
+    get:
+      operationId: category_retrieve
+      description: |-
+        Retrieve object list based query params provided in the request data.
+        Args:
+            request (Request): The HTTP request object containing the data.
+        Returns:
+            object: The list of retrieved objects if found.
+      parameters:
+      - in: query
+        name: category_code
+        schema:
+          type: string
+          maxLength: 256
+          minLength: 1
+      - in: query
+        name: category_name
+        schema:
+          type: string
+          maxLength: 256
+          minLength: 1
+      - in: query
+        name: is_pagination
+        schema:
+          type: boolean
+          default: true
+      - in: query
+        name: page
+        schema:
+          type: integer
+          minimum: 1
+          default: 1
+      - in: query
+        name: page_size
+        schema:
+          type: integer
+          minimum: 1
+          default: 10
+      tags:
+      - Category
+      security:
+      - TokenAuth: []
+      - TokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CategoryListResponse'
+              examples:
+                ListCategory-Success:
+                  value:
+                    data:
+                      list:
+                      - category_name: Laptop
+                        category_code: LAPTOP
+                        category_id: 23456789-abcd-efgh-ijkl-1234567890a2
+                      pagination:
+                        count: 1
+                        page_size: 1
+                        current_page: 1
+                        total_pages: 1
+                    errors: null
+                    messages: null
+                    status_code: 200
+                    is_success: true
+                  summary: List Category - Success
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundResponse'
+              examples:
+                404NotFound:
+                  value:
+                    data: null
+                    errors:
+                      code: NO_DATA_FOUND
+                      message: No Data Found.
+                    status_code: 404
+                    is_success: false
+                  summary: 404 Not Found
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedResponse'
+              examples:
+                401Unauthorized:
+                  value:
+                    data: null
+                    errors:
+                      code: UNAUTHORIZED
+                      message: Unauthorized Access.
+                    status_code: 401
+                    is_success: false
+                  summary: 401 Unauthorized
+          description: ''
+    post:
+      operationId: category_create
+      description: |-
+        Handles the object creation process, including validation, data enrichment,
+        database persistence, and response generation.
+
+        Args:
+            request (Request): The HTTP request containing input data.
+
+        Returns:
+            Response: A success response with the created object(s)
+            or an error message if validation fails.
+      tags:
+      - Category
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Category'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Category'
+        required: true
+      security:
+      - TokenAuth: []
+      - TokenAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CategoryResponse'
+              examples:
+                CreateCategory-Success:
+                  value:
+                    data:
+                      category_name: Laptop
+                      category_code: LAPTOP
+                      category_id: 23456789-abcd-efgh-ijkl-1234567890a2
+                    errors: null
+                    messages:
+                      message: Created Successfully.
+                    status_code: 201
+                    is_success: true
+                  summary: Create Category - Success
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestResponse'
+              examples:
+                400BadRequest:
+                  value:
+                    data: null
+                    errors:
+                    - code: INVALID
+                      message: Invalid data.
+                      field: field_name
+                    status_code: 400
+                    is_success: false
+                  summary: 400 Bad Request
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedResponse'
+              examples:
+                401Unauthorized:
+                  value:
+                    data: null
+                    errors:
+                      code: UNAUTHORIZED
+                      message: Unauthorized Access.
+                    status_code: 401
+                    is_success: false
+                  summary: 401 Unauthorized
+          description: ''
+  /api/category/{category_id}:
+    get:
+      operationId: category_retrieve_2
+      description: |-
+        Retrieve an object based on the ID provided in the request data.
+        Args:
+            request (Request): The HTTP request object containing the data.
+        Returns:
+            object: The retrieved object if found.
+      parameters:
+      - in: path
+        name: category_id
+        schema:
+          type: string
+        required: true
+      tags:
+      - Category
+      security:
+      - TokenAuth: []
+      - TokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CategoryResponse'
+              examples:
+                GetCategoryById-Success:
+                  value:
+                    data:
+                      category_name: Laptop
+                      category_code: LAPTOP
+                      category_id: 23456789-abcd-efgh-ijkl-1234567890a2
+                    errors: null
+                    messages: null
+                    status_code: 200
+                    is_success: true
+                  summary: Get Category by Id - Success
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundResponse'
+              examples:
+                404NotFound:
+                  value:
+                    data: null
+                    errors:
+                      code: NO_DATA_FOUND
+                      message: No Data Found.
+                    status_code: 404
+                    is_success: false
+                  summary: 404 Not Found
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedResponse'
+              examples:
+                401Unauthorized:
+                  value:
+                    data: null
+                    errors:
+                      code: UNAUTHORIZED
+                      message: Unauthorized Access.
+                    status_code: 401
+                    is_success: false
+                  summary: 401 Unauthorized
+          description: ''
+    put:
+      operationId: category_update
+      description: |-
+        Update an object based on query params and data provided in the request.
+        Args:
+            request (Request): The HTTP request object containing the data.
+        Returns:
+            object: The updated object if the update is successful.
+      parameters:
+      - in: path
+        name: category_id
+        schema:
+          type: string
+        required: true
+      tags:
+      - Category
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Category'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Category'
+        required: true
+      security:
+      - TokenAuth: []
+      - TokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CategoryResponse'
+              examples:
+                UpdateCategory-Success:
+                  value:
+                    data:
+                      category_name: Laptop
+                      category_code: LAPTOP
+                      category_id: 23456789-abcd-efgh-ijkl-1234567890a2
+                    errors: null
+                    messages:
+                      message: Updated Successfully.
+                    status_code: 200
+                    is_success: true
+                  summary: Update Category - Success
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestResponse'
+              examples:
+                400BadRequest:
+                  value:
+                    data: null
+                    errors:
+                    - code: INVALID
+                      message: Invalid data.
+                      field: field_name
+                    status_code: 400
+                    is_success: false
+                  summary: 400 Bad Request
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundResponse'
+              examples:
+                404NotFound:
+                  value:
+                    data: null
+                    errors:
+                      code: NO_DATA_FOUND
+                      message: No Data Found.
+                    status_code: 404
+                    is_success: false
+                  summary: 404 Not Found
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedResponse'
+              examples:
+                401Unauthorized:
+                  value:
+                    data: null
+                    errors:
+                      code: UNAUTHORIZED
+                      message: Unauthorized Access.
+                    status_code: 401
+                    is_success: false
+                  summary: 401 Unauthorized
+          description: ''
+    patch:
+      operationId: category_partial_update
+      description: |-
+        Update an object based on query params and data provided in the request.
+        Args:
+            request (Request): The HTTP request object containing the data.
+        Returns:
+            object: The updated object if the update is successful.
+      parameters:
+      - in: path
+        name: category_id
+        schema:
+          type: string
+        required: true
+      tags:
+      - Category
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedCategory'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedCategory'
+      security:
+      - TokenAuth: []
+      - TokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CategoryResponse'
+              examples:
+                UpdateCategory-Success:
+                  value:
+                    data:
+                      category_name: Laptop
+                      category_code: LAPTOP
+                      category_id: 23456789-abcd-efgh-ijkl-1234567890a2
+                    errors: null
+                    messages:
+                      message: Updated Successfully.
+                    status_code: 200
+                    is_success: true
+                  summary: Update Category - Success
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestResponse'
+              examples:
+                400BadRequest:
+                  value:
+                    data: null
+                    errors:
+                    - code: INVALID
+                      message: Invalid data.
+                      field: field_name
+                    status_code: 400
+                    is_success: false
+                  summary: 400 Bad Request
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundResponse'
+              examples:
+                404NotFound:
+                  value:
+                    data: null
+                    errors:
+                      code: NO_DATA_FOUND
+                      message: No Data Found.
+                    status_code: 404
+                    is_success: false
+                  summary: 404 Not Found
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedResponse'
+              examples:
+                401Unauthorized:
+                  value:
+                    data: null
+                    errors:
+                      code: UNAUTHORIZED
+                      message: Unauthorized Access.
+                    status_code: 401
+                    is_success: false
+                  summary: 401 Unauthorized
+          description: ''
+    delete:
+      operationId: category_destroy
+      description: |-
+        Handles the object deletion process.
+
+        This method retrieves the object based on the lookup field
+        and performs soft deletion by default. It allows customization
+        of deletion behavior through the Manager class.
+
+        Args:
+            request (Request): The HTTP request containing relevant parameters.
+            **kwargs: Additional keyword arguments, including the lookup field value.
+
+        Returns:
+            Response: A success response if deletion is successful.
+
+        Raises:
+            NoDataFoundError: If the required lookup parameter is missing.
+      parameters:
+      - in: path
+        name: category_id
+        schema:
+          type: string
+        required: true
+      tags:
+      - Category
+      security:
+      - TokenAuth: []
+      - TokenAuth: []
+      - {}
+      responses:
+        '204':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+              examples:
+                DeleteCategory-Success:
+                  value:
+                    data: null
+                    errors: null
+                    messages:
+                      message: Deleted Successfully.
+                    status_code: 204
+                    is_success: true
+                  summary: Delete Category - Success
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundResponse'
+              examples:
+                404NotFound:
+                  value:
+                    data: null
+                    errors:
+                      code: NO_DATA_FOUND
+                      message: No Data Found.
+                    status_code: 404
+                    is_success: false
+                  summary: 404 Not Found
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedResponse'
+              examples:
+                401Unauthorized:
+                  value:
+                    data: null
+                    errors:
+                      code: UNAUTHORIZED
+                      message: Unauthorized Access.
+                    status_code: 401
+                    is_success: false
+                  summary: 401 Unauthorized
+          description: ''
+  /api/notification:
+    get:
+      operationId: notification_retrieve
+      description: |-
+        Retrieve object list based query params provided in the request data.
+        Args:
+            request (Request): The HTTP request object containing the data.
+        Returns:
+            object: The list of retrieved objects if found.
+      parameters:
+      - in: query
+        name: is_pagination
+        schema:
+          type: boolean
+          default: true
+      - in: query
+        name: page
+        schema:
+          type: integer
+          minimum: 1
+          default: 1
+      - in: query
+        name: page_size
+        schema:
+          type: integer
+          minimum: 1
+          default: 10
+      tags:
+      - Notification
+      security:
+      - TokenAuth: []
+      - TokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotificationListResponse'
+              examples:
+                ListNotifications-Success:
+                  value:
+                    data:
+                      list:
+                      - created_dtm: '2025-06-10T11:10:42.099860Z'
+                        sent_by:
+                          email: test@gmail.com
+                          user_id: c4edf0fb-200f-475c-a9c9-5f8831e22f26
+                          role_id: COMPANY_ADMIN
+                          phone_number: '234234'
+                          profile_photo: null
+                          last_name: Bhushan
+                          first_name: Borse
+                          full_name: Borse Bhushan
+                        notification:
+                          title: Stock Movement
+                          message: Stock(IN:8702DF6C) has been In. The quantity is
+                            1.
+                          created_by: c4edf0fb-200f-475c-a9c9-5f8831e22f26
+                          notification_id: 1160442a-d08b-4ce7-9ab8-ec7a495e0a5e
+                          notification_type: STOCK_IN
+                          notification_data:
+                            stock_id: 184843e7-7c59-4611-97d4-f0c9e32fa7e7
+                      pagination:
+                        count: 1
+                        page_size: 1
+                        current_page: 1
+                        total_pages: 1
+                    errors: null
+                    messages: null
+                    status_code: 200
+                    is_success: true
+                  summary: List Notifications - Success
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundResponse'
+              examples:
+                404NotFound:
+                  value:
+                    data: null
+                    errors:
+                      code: NO_DATA_FOUND
+                      message: No Data Found.
+                    status_code: 404
+                    is_success: false
+                  summary: 404 Not Found
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedResponse'
+              examples:
+                401Unauthorized:
+                  value:
+                    data: null
+                    errors:
+                      code: UNAUTHORIZED
+                      message: Unauthorized Access.
+                    status_code: 401
+                    is_success: false
+                  summary: 401 Unauthorized
+          description: ''
+    put:
+      operationId: notification_update
+      description: |-
+        This function will make  is_read flag false -> true so the notification will be mark as read and wont
+        be seen in the notification list.
+      tags:
+      - Notification
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NotificationMarkAsRead'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/NotificationMarkAsRead'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/NotificationMarkAsRead'
+        required: true
+      security:
+      - TokenAuth: []
+      - TokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MarkNotificationResponse'
+              examples:
+                MarkNotificationsAsRead-Success:
+                  value:
+                    data: null
+                    errors: null
+                    messages:
+                      message: 1 Notifications are mark as read.
+                    status_code: 200
+                    is_success: true
+                  summary: Mark Notifications as Read - Success
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestResponse'
+              examples:
+                400BadRequest:
+                  value:
+                    data: null
+                    errors:
+                    - code: INVALID
+                      message: Invalid data.
+                      field: field_name
+                    status_code: 400
+                    is_success: false
+                  summary: 400 Bad Request
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundResponse'
+              examples:
+                404NotFound:
+                  value:
+                    data: null
+                    errors:
+                      code: NO_DATA_FOUND
+                      message: No Data Found.
+                    status_code: 404
+                    is_success: false
+                  summary: 404 Not Found
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedResponse'
+              examples:
+                401Unauthorized:
+                  value:
+                    data: null
+                    errors:
+                      code: UNAUTHORIZED
+                      message: Unauthorized Access.
+                    status_code: 401
+                    is_success: false
+                  summary: 401 Unauthorized
+          description: ''
+  /api/permission:
+    get:
+      operationId: permission_retrieve
+      description: Get the list of permissions and modules
+      tags:
+      - Permission
+      security:
+      - TokenAuth: []
+      - TokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PermissionListResponse'
+              examples:
+                ListPermissions-Success:
+                  value:
+                    data:
+                    - name: View User
+                      code: view_user
+                      module: User
+                      action: view
+                      permission_id: 9d018a56-abd9-4dfd-b606-80ce3ba8f53f
+                    errors: null
+                    messages: null
+                    status_code: 200
+                    is_success: true
+                  summary: List Permissions - Success
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundResponse'
+              examples:
+                404NotFound:
+                  value:
+                    data: null
+                    errors:
+                      code: NO_DATA_FOUND
+                      message: No Data Found.
+                    status_code: 404
+                    is_success: false
+                  summary: 404 Not Found
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedResponse'
+              examples:
+                401Unauthorized:
+                  value:
+                    data: null
+                    errors:
+                      code: UNAUTHORIZED
+                      message: Unauthorized Access.
+                    status_code: 401
+                    is_success: false
+                  summary: 401 Unauthorized
+          description: ''
+  /api/product:
+    get:
+      operationId: product_retrieve
+      description: |-
+        Retrieve object list based query params provided in the request data.
+        Args:
+            request (Request): The HTTP request object containing the data.
+        Returns:
+            object: The list of retrieved objects if found.
+      parameters:
+      - in: query
+        name: is_pagination
+        schema:
+          type: boolean
+          default: true
+      - in: query
+        name: page
+        schema:
+          type: integer
+          minimum: 1
+          default: 1
+      - in: query
+        name: page_size
+        schema:
+          type: integer
+          minimum: 1
+          default: 10
+      - in: query
+        name: product_code
+        schema:
+          type: string
+          maxLength: 256
+          minLength: 1
+      - in: query
+        name: product_name
+        schema:
+          type: string
+          maxLength: 256
+          minLength: 1
+      tags:
+      - Product
+      security:
+      - TokenAuth: []
+      - TokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductListResponse'
+              examples:
+                ListProduct-Success:
+                  value:
+                    data:
+                      list:
+                      - product_id: 0e7b4f91-c76e-4c63-b94c-ea7d51524fa1
+                        product_code: BLUE-DELL-LATITUDE
+                        product_name: Dell latitude
+                        category_id: b4f792e2-d1be-4398-9fdf-5265539e1f71
+                        sell_price: 2.99
+                        purchase_price: 1.23
+                      pagination:
+                        count: 1
+                        page_size: 1
+                        current_page: 1
+                        total_pages: 1
+                    errors: null
+                    messages: null
+                    status_code: 200
+                    is_success: true
+                  summary: List Product - Success
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundResponse'
+              examples:
+                404NotFound:
+                  value:
+                    data: null
+                    errors:
+                      code: NO_DATA_FOUND
+                      message: No Data Found.
+                    status_code: 404
+                    is_success: false
+                  summary: 404 Not Found
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedResponse'
+              examples:
+                401Unauthorized:
+                  value:
+                    data: null
+                    errors:
+                      code: UNAUTHORIZED
+                      message: Unauthorized Access.
+                    status_code: 401
+                    is_success: false
+                  summary: 401 Unauthorized
+          description: ''
+    post:
+      operationId: product_create
+      description: |-
+        Handles the object creation process, including validation, data enrichment,
+        database persistence, and response generation.
+
+        Args:
+            request (Request): The HTTP request containing input data.
+
+        Returns:
+            Response: A success response with the created object(s)
+            or an error message if validation fails.
+      tags:
+      - Product
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Product'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Product'
+        required: true
+      security:
+      - TokenAuth: []
+      - TokenAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductResponse'
+              examples:
+                CreateProduct-Success:
+                  value:
+                    data:
+                      product_id: 0e7b4f91-c76e-4c63-b94c-ea7d51524fa1
+                      product_code: BLUE-DELL-LATITUDE
+                      product_name: Dell latitude
+                      category_id: b4f792e2-d1be-4398-9fdf-5265539e1f71
+                      sell_price: 2.99
+                      purchase_price: 1.23
+                    errors: null
+                    messages:
+                      message: Created Successfully.
+                    status_code: 201
+                    is_success: true
+                  summary: Create Product - Success
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestResponse'
+              examples:
+                400BadRequest:
+                  value:
+                    data: null
+                    errors:
+                    - code: INVALID
+                      message: Invalid data.
+                      field: field_name
+                    status_code: 400
+                    is_success: false
+                  summary: 400 Bad Request
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedResponse'
+              examples:
+                401Unauthorized:
+                  value:
+                    data: null
+                    errors:
+                      code: UNAUTHORIZED
+                      message: Unauthorized Access.
+                    status_code: 401
+                    is_success: false
+                  summary: 401 Unauthorized
+          description: ''
+  /api/product/{product_id}:
+    get:
+      operationId: product_retrieve_2
+      description: |-
+        Retrieve an object based on the ID provided in the request data.
+        Args:
+            request (Request): The HTTP request object containing the data.
+        Returns:
+            object: The retrieved object if found.
+      parameters:
+      - in: path
+        name: product_id
+        schema:
+          type: string
+        required: true
+      tags:
+      - Product
+      security:
+      - TokenAuth: []
+      - TokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductResponse'
+              examples:
+                GetProductById-Success:
+                  value:
+                    data:
+                      product_id: 0e7b4f91-c76e-4c63-b94c-ea7d51524fa1
+                      product_code: BLUE-DELL-LATITUDE
+                      product_name: Dell latitude
+                      category_id: b4f792e2-d1be-4398-9fdf-5265539e1f71
+                      sell_price: 2.99
+                      purchase_price: 1.23
+                    errors: null
+                    messages: null
+                    status_code: 200
+                    is_success: true
+                  summary: Get Product by Id - Success
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundResponse'
+              examples:
+                404NotFound:
+                  value:
+                    data: null
+                    errors:
+                      code: NO_DATA_FOUND
+                      message: No Data Found.
+                    status_code: 404
+                    is_success: false
+                  summary: 404 Not Found
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedResponse'
+              examples:
+                401Unauthorized:
+                  value:
+                    data: null
+                    errors:
+                      code: UNAUTHORIZED
+                      message: Unauthorized Access.
+                    status_code: 401
+                    is_success: false
+                  summary: 401 Unauthorized
+          description: ''
+    put:
+      operationId: product_update
+      description: |-
+        Update an object based on query params and data provided in the request.
+        Args:
+            request (Request): The HTTP request object containing the data.
+        Returns:
+            object: The updated object if the update is successful.
+      parameters:
+      - in: path
+        name: product_id
+        schema:
+          type: string
+        required: true
+      tags:
+      - Product
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Product'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Product'
+        required: true
+      security:
+      - TokenAuth: []
+      - TokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductResponse'
+              examples:
+                UpdateProduct-Success:
+                  value:
+                    data:
+                      product_id: 0e7b4f91-c76e-4c63-b94c-ea7d51524fa1
+                      product_code: BLUE-DELL-LATITUDE
+                      product_name: Dell latitude
+                      category_id: b4f792e2-d1be-4398-9fdf-5265539e1f71
+                      sell_price: 2.99
+                      purchase_price: 1.23
+                    errors: null
+                    messages:
+                      message: Updated Successfully.
+                    status_code: 200
+                    is_success: true
+                  summary: Update Product - Success
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestResponse'
+              examples:
+                400BadRequest:
+                  value:
+                    data: null
+                    errors:
+                    - code: INVALID
+                      message: Invalid data.
+                      field: field_name
+                    status_code: 400
+                    is_success: false
+                  summary: 400 Bad Request
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundResponse'
+              examples:
+                404NotFound:
+                  value:
+                    data: null
+                    errors:
+                      code: NO_DATA_FOUND
+                      message: No Data Found.
+                    status_code: 404
+                    is_success: false
+                  summary: 404 Not Found
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedResponse'
+              examples:
+                401Unauthorized:
+                  value:
+                    data: null
+                    errors:
+                      code: UNAUTHORIZED
+                      message: Unauthorized Access.
+                    status_code: 401
+                    is_success: false
+                  summary: 401 Unauthorized
+          description: ''
+    patch:
+      operationId: product_partial_update
+      description: |-
+        Update an object based on query params and data provided in the request.
+        Args:
+            request (Request): The HTTP request object containing the data.
+        Returns:
+            object: The updated object if the update is successful.
+      parameters:
+      - in: path
+        name: product_id
+        schema:
+          type: string
+        required: true
+      tags:
+      - Product
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedProduct'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedProduct'
+      security:
+      - TokenAuth: []
+      - TokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductResponse'
+              examples:
+                UpdateProduct-Success:
+                  value:
+                    data:
+                      product_id: 0e7b4f91-c76e-4c63-b94c-ea7d51524fa1
+                      product_code: BLUE-DELL-LATITUDE
+                      product_name: Dell latitude
+                      category_id: b4f792e2-d1be-4398-9fdf-5265539e1f71
+                      sell_price: 2.99
+                      purchase_price: 1.23
+                    errors: null
+                    messages:
+                      message: Updated Successfully.
+                    status_code: 200
+                    is_success: true
+                  summary: Update Product - Success
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestResponse'
+              examples:
+                400BadRequest:
+                  value:
+                    data: null
+                    errors:
+                    - code: INVALID
+                      message: Invalid data.
+                      field: field_name
+                    status_code: 400
+                    is_success: false
+                  summary: 400 Bad Request
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundResponse'
+              examples:
+                404NotFound:
+                  value:
+                    data: null
+                    errors:
+                      code: NO_DATA_FOUND
+                      message: No Data Found.
+                    status_code: 404
+                    is_success: false
+                  summary: 404 Not Found
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedResponse'
+              examples:
+                401Unauthorized:
+                  value:
+                    data: null
+                    errors:
+                      code: UNAUTHORIZED
+                      message: Unauthorized Access.
+                    status_code: 401
+                    is_success: false
+                  summary: 401 Unauthorized
+          description: ''
+    delete:
+      operationId: product_destroy
+      description: |-
+        Handles the object deletion process.
+
+        This method retrieves the object based on the lookup field
+        and performs soft deletion by default. It allows customization
+        of deletion behavior through the Manager class.
+
+        Args:
+            request (Request): The HTTP request containing relevant parameters.
+            **kwargs: Additional keyword arguments, including the lookup field value.
+
+        Returns:
+            Response: A success response if deletion is successful.
+
+        Raises:
+            NoDataFoundError: If the required lookup parameter is missing.
+      parameters:
+      - in: path
+        name: product_id
+        schema:
+          type: string
+        required: true
+      tags:
+      - Product
+      security:
+      - TokenAuth: []
+      - TokenAuth: []
+      - {}
+      responses:
+        '204':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+              examples:
+                DeleteProduct-Success:
+                  value:
+                    data: null
+                    errors: null
+                    messages:
+                      message: Deleted Successfully.
+                    status_code: 204
+                    is_success: true
+                  summary: Delete Product - Success
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundResponse'
+              examples:
+                404NotFound:
+                  value:
+                    data: null
+                    errors:
+                      code: NO_DATA_FOUND
+                      message: No Data Found.
+                    status_code: 404
+                    is_success: false
+                  summary: 404 Not Found
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedResponse'
+              examples:
+                401Unauthorized:
+                  value:
+                    data: null
+                    errors:
+                      code: UNAUTHORIZED
+                      message: Unauthorized Access.
+                    status_code: 401
+                    is_success: false
+                  summary: 401 Unauthorized
+          description: ''
+  /api/report/stock-summary:
+    get:
+      operationId: report_stock_summary_retrieve
+      description: Endpoint to get stock summary.
+      tags:
+      - Reports
+      security:
+      - TokenAuth: []
+      - TokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReportListResponse'
+              examples:
+                Report-StockMovementByProduct:
+                  value:
+                    data:
+                    - movement_type: IN
+                      total_quantity: 42
+                      product:
+                        product_id: a4d4cd4f-6580-4a88-a157-b0eba816df60
+                        sell_price: 2.99
+                        category_id: b4f792e2-d1be-4398-9fdf-5265539e1f71
+                        product_code: asd
+                        product_name: asdsad
+                        purchase_price: 1.23
+                    errors: null
+                    messages: null
+                    status_code: 200
+                    is_success: true
+                  summary: Report - Stock Movement by Product
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundResponse'
+              examples:
+                404NotFound:
+                  value:
+                    data: null
+                    errors:
+                      code: NO_DATA_FOUND
+                      message: No Data Found.
+                    status_code: 404
+                    is_success: false
+                  summary: 404 Not Found
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedResponse'
+              examples:
+                401Unauthorized:
+                  value:
+                    data: null
+                    errors:
+                      code: UNAUTHORIZED
+                      message: Unauthorized Access.
+                    status_code: 401
+                    is_success: false
+                  summary: 401 Unauthorized
+          description: ''
+  /api/role-permission:
+    get:
+      operationId: role_permission_retrieve
+      description: |-
+        Retrieve object list based query params provided in the request data.
+        Args:
+            request (Request): The HTTP request object containing the data.
+        Returns:
+            object: The list of retrieved objects if found.
+      tags:
+      - Role Permission
+      security:
+      - TokenAuth: []
+      - TokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RolePermissionListResponse'
+              examples:
+                ListRolePermission-Success:
+                  value:
+                    data:
+                      list:
+                      - role_id: 123e4567-e89b-12d3-a456-426614174000
+                        permission_id: 987e6543-e21b-12d3-a456-426614174000
+                      - role_id: 321e4567-e89b-12d3-a456-426614174000
+                        permission_id: 789e6543-e21b-12d3-a456-426614174000
+                      pagination:
+                        count: 1
+                        page_size: 1
+                        current_page: 1
+                        total_pages: 1
+                    errors: null
+                    messages: null
+                    status_code: 200
+                    is_success: true
+                  summary: List RolePermission - Success
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundResponse'
+              examples:
+                404NotFound:
+                  value:
+                    data: null
+                    errors:
+                      code: NO_DATA_FOUND
+                      message: No Data Found.
+                    status_code: 404
+                    is_success: false
+                  summary: 404 Not Found
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedResponse'
+              examples:
+                401Unauthorized:
+                  value:
+                    data: null
+                    errors:
+                      code: UNAUTHORIZED
+                      message: Unauthorized Access.
+                    status_code: 401
+                    is_success: false
+                  summary: 401 Unauthorized
+          description: ''
+    post:
+      operationId: role_permission_create
+      description: |-
+        Handles the object creation process, including validation, data enrichment,
+        database persistence, and response generation.
+
+        Args:
+            request (Request): The HTTP request containing input data.
+
+        Returns:
+            Response: A success response with the created object(s)
+            or an error message if validation fails.
+      tags:
+      - Role Permission
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/RolePermission'
+          multipart/form-data:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/RolePermission'
+        required: true
+      security:
+      - TokenAuth: []
+      - TokenAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RolePermissionResponse'
+              examples:
+                CreateRolePermission-Success:
+                  value:
+                    data:
+                      role_id: 123e4567-e89b-12d3-a456-426614174000
+                      permission_id: 987e6543-e21b-12d3-a456-426614174000
+                    errors: null
+                    messages:
+                      message: Created Successfully.
+                    status_code: 201
+                    is_success: true
+                  summary: Create RolePermission - Success
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestResponse'
+              examples:
+                400BadRequest:
+                  value:
+                    data: null
+                    errors:
+                    - code: INVALID
+                      message: Invalid data.
+                      field: field_name
+                    status_code: 400
+                    is_success: false
+                  summary: 400 Bad Request
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedResponse'
+              examples:
+                401Unauthorized:
+                  value:
+                    data: null
+                    errors:
+                      code: UNAUTHORIZED
+                      message: Unauthorized Access.
+                    status_code: 401
+                    is_success: false
+                  summary: 401 Unauthorized
+          description: ''
+  /api/role-permission/{role_id}/{permission_id}:
+    delete:
+      operationId: role_permission_destroy
+      description: Deletes the role-permission mapping
+      parameters:
+      - in: path
+        name: permission_id
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: role_id
+        schema:
+          type: string
+        required: true
+      tags:
+      - Role Permission
+      security:
+      - TokenAuth: []
+      - TokenAuth: []
+      - {}
+      responses:
+        '204':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+              examples:
+                DeleteRolePermission-Success:
+                  value:
+                    data: null
+                    errors: null
+                    messages:
+                      message: Deleted Successfully.
+                    status_code: 204
+                    is_success: true
+                  summary: Delete RolePermission - Success
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundResponse'
+              examples:
+                404NotFound:
+                  value:
+                    data: null
+                    errors:
+                      code: NO_DATA_FOUND
+                      message: No Data Found.
+                    status_code: 404
+                    is_success: false
+                  summary: 404 Not Found
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedResponse'
+              examples:
+                401Unauthorized:
+                  value:
+                    data: null
+                    errors:
+                      code: UNAUTHORIZED
+                      message: Unauthorized Access.
+                    status_code: 401
+                    is_success: false
+                  summary: 401 Unauthorized
+          description: ''
+  /api/stock:
+    get:
+      operationId: stock_retrieve
+      description: |-
+        Retrieve object list based query params provided in the request data.
+        Args:
+            request (Request): The HTTP request object containing the data.
+        Returns:
+            object: The list of retrieved objects if found.
+      parameters:
+      - in: query
+        name: is_pagination
+        schema:
+          type: boolean
+          default: true
+      - in: query
+        name: movement_type
+        schema:
+          enum:
+          - IN
+          - OUT
+          type: string
+          minLength: 1
+        description: |-
+          * `IN` - In
+          * `OUT` - Out
+      - in: query
+        name: page
+        schema:
+          type: integer
+          minimum: 1
+          default: 1
+      - in: query
+        name: page_size
+        schema:
+          type: integer
+          minimum: 1
+          default: 10
+      - in: query
+        name: product_id
+        schema:
+          type: string
+          format: uuid
+      - in: query
+        name: reference_number
+        schema:
+          type: string
+          maxLength: 256
+          minLength: 1
+      - in: query
+        name: supplier_id
+        schema:
+          type: string
+          format: uuid
+      tags:
+      - Stock
+      security:
+      - TokenAuth: []
+      - TokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StockListResponse'
+              examples:
+                ListStock-Success:
+                  value:
+                    data:
+                      list:
+                      - stock_id: a84e7159-9d99-4b5a-98b6-4568c40267b4
+                        product_id: b4f792e2-d1be-4398-9fdf-5265539e1f71
+                        supplier_id: 9187cfc1-ccfb-4c7e-8fd1-98e57c9b0f00
+                        price: 25.5
+                        movement_type: IN
+                        quantity: 10
+                      pagination:
+                        count: 1
+                        page_size: 1
+                        current_page: 1
+                        total_pages: 1
+                    errors: null
+                    messages: null
+                    status_code: 200
+                    is_success: true
+                  summary: List Stock - Success
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundResponse'
+              examples:
+                404NotFound:
+                  value:
+                    data: null
+                    errors:
+                      code: NO_DATA_FOUND
+                      message: No Data Found.
+                    status_code: 404
+                    is_success: false
+                  summary: 404 Not Found
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedResponse'
+              examples:
+                401Unauthorized:
+                  value:
+                    data: null
+                    errors:
+                      code: UNAUTHORIZED
+                      message: Unauthorized Access.
+                    status_code: 401
+                    is_success: false
+                  summary: 401 Unauthorized
+          description: ''
+    post:
+      operationId: stock_create
+      description: |-
+        Handles the object creation process, including validation, data enrichment,
+        database persistence, and response generation.
+
+        Args:
+            request (Request): The HTTP request containing input data.
+
+        Returns:
+            Response: A success response with the created object(s)
+            or an error message if validation fails.
+      tags:
+      - Stock
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Stock'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Stock'
+        required: true
+      security:
+      - TokenAuth: []
+      - TokenAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StockResponse'
+              examples:
+                CreateStock-Success:
+                  value:
+                    data:
+                      stock_id: a84e7159-9d99-4b5a-98b6-4568c40267b4
+                      product_id: b4f792e2-d1be-4398-9fdf-5265539e1f71
+                      supplier_id: 9187cfc1-ccfb-4c7e-8fd1-98e57c9b0f00
+                      price: 25.5
+                      movement_type: IN
+                      quantity: 10
+                    errors: null
+                    messages:
+                      message: Created Successfully.
+                    status_code: 201
+                    is_success: true
+                  summary: Create Stock - Success
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestResponse'
+              examples:
+                400BadRequest:
+                  value:
+                    data: null
+                    errors:
+                    - code: INVALID
+                      message: Invalid data.
+                      field: field_name
+                    status_code: 400
+                    is_success: false
+                  summary: 400 Bad Request
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedResponse'
+              examples:
+                401Unauthorized:
+                  value:
+                    data: null
+                    errors:
+                      code: UNAUTHORIZED
+                      message: Unauthorized Access.
+                    status_code: 401
+                    is_success: false
+                  summary: 401 Unauthorized
+          description: ''
+  /api/stock/{stock_id}:
+    get:
+      operationId: stock_retrieve_2
+      description: |-
+        Retrieve an object based on the ID provided in the request data.
+        Args:
+            request (Request): The HTTP request object containing the data.
+        Returns:
+            object: The retrieved object if found.
+      parameters:
+      - in: path
+        name: stock_id
+        schema:
+          type: string
+        required: true
+      tags:
+      - Stock
+      security:
+      - TokenAuth: []
+      - TokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StockResponse'
+              examples:
+                GetStockById-Success:
+                  value:
+                    data:
+                      stock_id: a84e7159-9d99-4b5a-98b6-4568c40267b4
+                      product_id: b4f792e2-d1be-4398-9fdf-5265539e1f71
+                      supplier_id: 9187cfc1-ccfb-4c7e-8fd1-98e57c9b0f00
+                      price: 25.5
+                      movement_type: IN
+                      quantity: 10
+                    errors: null
+                    messages: null
+                    status_code: 200
+                    is_success: true
+                  summary: Get Stock by Id - Success
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundResponse'
+              examples:
+                404NotFound:
+                  value:
+                    data: null
+                    errors:
+                      code: NO_DATA_FOUND
+                      message: No Data Found.
+                    status_code: 404
+                    is_success: false
+                  summary: 404 Not Found
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedResponse'
+              examples:
+                401Unauthorized:
+                  value:
+                    data: null
+                    errors:
+                      code: UNAUTHORIZED
+                      message: Unauthorized Access.
+                    status_code: 401
+                    is_success: false
+                  summary: 401 Unauthorized
+          description: ''
+    delete:
+      operationId: stock_destroy
+      description: |-
+        Handles the object deletion process.
+
+        This method retrieves the object based on the lookup field
+        and performs soft deletion by default. It allows customization
+        of deletion behavior through the Manager class.
+
+        Args:
+            request (Request): The HTTP request containing relevant parameters.
+            **kwargs: Additional keyword arguments, including the lookup field value.
+
+        Returns:
+            Response: A success response if deletion is successful.
+
+        Raises:
+            NoDataFoundError: If the required lookup parameter is missing.
+      parameters:
+      - in: path
+        name: stock_id
+        schema:
+          type: string
+        required: true
+      tags:
+      - Stock
+      security:
+      - TokenAuth: []
+      - TokenAuth: []
+      - {}
+      responses:
+        '204':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+              examples:
+                DeleteStock-Success:
+                  value:
+                    data: null
+                    errors: null
+                    messages:
+                      message: Deleted Successfully.
+                    status_code: 204
+                    is_success: true
+                  summary: Delete Stock - Success
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundResponse'
+              examples:
+                404NotFound:
+                  value:
+                    data: null
+                    errors:
+                      code: NO_DATA_FOUND
+                      message: No Data Found.
+                    status_code: 404
+                    is_success: false
+                  summary: 404 Not Found
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedResponse'
+              examples:
+                401Unauthorized:
+                  value:
+                    data: null
+                    errors:
+                      code: UNAUTHORIZED
+                      message: Unauthorized Access.
+                    status_code: 401
+                    is_success: false
+                  summary: 401 Unauthorized
+          description: ''
+  /api/supplier:
+    get:
+      operationId: supplier_retrieve
+      description: |-
+        Retrieve object list based query params provided in the request data.
+        Args:
+            request (Request): The HTTP request object containing the data.
+        Returns:
+            object: The list of retrieved objects if found.
+      parameters:
+      - in: query
+        name: is_pagination
+        schema:
+          type: boolean
+          default: true
+      - in: query
+        name: page
+        schema:
+          type: integer
+          minimum: 1
+          default: 1
+      - in: query
+        name: page_size
+        schema:
+          type: integer
+          minimum: 1
+          default: 10
+      - in: query
+        name: supplier_code
+        schema:
+          type: string
+          maxLength: 256
+          minLength: 1
+      - in: query
+        name: supplier_name
+        schema:
+          type: string
+          maxLength: 256
+          minLength: 1
+      tags:
+      - Supplier
+      security:
+      - TokenAuth: []
+      - TokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SupplierListResponse'
+              examples:
+                ListSupplier-Success:
+                  value:
+                    data:
+                      list:
+                      - supplier_id: 9187cfc1-ccfb-4c7e-8fd1-98e57c9b0f00
+                        supplier_code: DELL
+                        supplier_name: Dell
+                      pagination:
+                        count: 1
+                        page_size: 1
+                        current_page: 1
+                        total_pages: 1
+                    errors: null
+                    messages: null
+                    status_code: 200
+                    is_success: true
+                  summary: List Supplier - Success
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundResponse'
+              examples:
+                404NotFound:
+                  value:
+                    data: null
+                    errors:
+                      code: NO_DATA_FOUND
+                      message: No Data Found.
+                    status_code: 404
+                    is_success: false
+                  summary: 404 Not Found
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedResponse'
+              examples:
+                401Unauthorized:
+                  value:
+                    data: null
+                    errors:
+                      code: UNAUTHORIZED
+                      message: Unauthorized Access.
+                    status_code: 401
+                    is_success: false
+                  summary: 401 Unauthorized
+          description: ''
+    post:
+      operationId: supplier_create
+      description: |-
+        Handles the object creation process, including validation, data enrichment,
+        database persistence, and response generation.
+
+        Args:
+            request (Request): The HTTP request containing input data.
+
+        Returns:
+            Response: A success response with the created object(s)
+            or an error message if validation fails.
+      tags:
+      - Supplier
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Supplier'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Supplier'
+        required: true
+      security:
+      - TokenAuth: []
+      - TokenAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SupplierResponse'
+              examples:
+                CreateSupplier-Success:
+                  value:
+                    data:
+                      supplier_id: 9187cfc1-ccfb-4c7e-8fd1-98e57c9b0f00
+                      supplier_code: DELL
+                      supplier_name: Dell
+                    errors: null
+                    messages:
+                      message: Created Successfully.
+                    status_code: 201
+                    is_success: true
+                  summary: Create Supplier - Success
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestResponse'
+              examples:
+                400BadRequest:
+                  value:
+                    data: null
+                    errors:
+                    - code: INVALID
+                      message: Invalid data.
+                      field: field_name
+                    status_code: 400
+                    is_success: false
+                  summary: 400 Bad Request
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedResponse'
+              examples:
+                401Unauthorized:
+                  value:
+                    data: null
+                    errors:
+                      code: UNAUTHORIZED
+                      message: Unauthorized Access.
+                    status_code: 401
+                    is_success: false
+                  summary: 401 Unauthorized
+          description: ''
+  /api/supplier/{supplier_id}:
+    get:
+      operationId: supplier_retrieve_2
+      description: |-
+        Retrieve an object based on the ID provided in the request data.
+        Args:
+            request (Request): The HTTP request object containing the data.
+        Returns:
+            object: The retrieved object if found.
+      parameters:
+      - in: path
+        name: supplier_id
+        schema:
+          type: string
+        required: true
+      tags:
+      - Supplier
+      security:
+      - TokenAuth: []
+      - TokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SupplierResponse'
+              examples:
+                GetSupplierById-Success:
+                  value:
+                    data:
+                      supplier_id: 9187cfc1-ccfb-4c7e-8fd1-98e57c9b0f00
+                      supplier_code: DELL
+                      supplier_name: Dell
+                    errors: null
+                    messages: null
+                    status_code: 200
+                    is_success: true
+                  summary: Get Supplier by Id - Success
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundResponse'
+              examples:
+                404NotFound:
+                  value:
+                    data: null
+                    errors:
+                      code: NO_DATA_FOUND
+                      message: No Data Found.
+                    status_code: 404
+                    is_success: false
+                  summary: 404 Not Found
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedResponse'
+              examples:
+                401Unauthorized:
+                  value:
+                    data: null
+                    errors:
+                      code: UNAUTHORIZED
+                      message: Unauthorized Access.
+                    status_code: 401
+                    is_success: false
+                  summary: 401 Unauthorized
+          description: ''
+    put:
+      operationId: supplier_update
+      description: |-
+        Update an object based on query params and data provided in the request.
+        Args:
+            request (Request): The HTTP request object containing the data.
+        Returns:
+            object: The updated object if the update is successful.
+      parameters:
+      - in: path
+        name: supplier_id
+        schema:
+          type: string
+        required: true
+      tags:
+      - Supplier
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Supplier'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Supplier'
+        required: true
+      security:
+      - TokenAuth: []
+      - TokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SupplierResponse'
+              examples:
+                UpdateSupplier-Success:
+                  value:
+                    data:
+                      supplier_id: 9187cfc1-ccfb-4c7e-8fd1-98e57c9b0f00
+                      supplier_code: DELL
+                      supplier_name: Dell
+                    errors: null
+                    messages:
+                      message: Updated Successfully.
+                    status_code: 200
+                    is_success: true
+                  summary: Update Supplier - Success
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestResponse'
+              examples:
+                400BadRequest:
+                  value:
+                    data: null
+                    errors:
+                    - code: INVALID
+                      message: Invalid data.
+                      field: field_name
+                    status_code: 400
+                    is_success: false
+                  summary: 400 Bad Request
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundResponse'
+              examples:
+                404NotFound:
+                  value:
+                    data: null
+                    errors:
+                      code: NO_DATA_FOUND
+                      message: No Data Found.
+                    status_code: 404
+                    is_success: false
+                  summary: 404 Not Found
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedResponse'
+              examples:
+                401Unauthorized:
+                  value:
+                    data: null
+                    errors:
+                      code: UNAUTHORIZED
+                      message: Unauthorized Access.
+                    status_code: 401
+                    is_success: false
+                  summary: 401 Unauthorized
+          description: ''
+    patch:
+      operationId: supplier_partial_update
+      description: |-
+        Update an object based on query params and data provided in the request.
+        Args:
+            request (Request): The HTTP request object containing the data.
+        Returns:
+            object: The updated object if the update is successful.
+      parameters:
+      - in: path
+        name: supplier_id
+        schema:
+          type: string
+        required: true
+      tags:
+      - Supplier
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedSupplier'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedSupplier'
+      security:
+      - TokenAuth: []
+      - TokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SupplierResponse'
+              examples:
+                UpdateSupplier-Success:
+                  value:
+                    data:
+                      supplier_id: 9187cfc1-ccfb-4c7e-8fd1-98e57c9b0f00
+                      supplier_code: DELL
+                      supplier_name: Dell
+                    errors: null
+                    messages:
+                      message: Updated Successfully.
+                    status_code: 200
+                    is_success: true
+                  summary: Update Supplier - Success
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestResponse'
+              examples:
+                400BadRequest:
+                  value:
+                    data: null
+                    errors:
+                    - code: INVALID
+                      message: Invalid data.
+                      field: field_name
+                    status_code: 400
+                    is_success: false
+                  summary: 400 Bad Request
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundResponse'
+              examples:
+                404NotFound:
+                  value:
+                    data: null
+                    errors:
+                      code: NO_DATA_FOUND
+                      message: No Data Found.
+                    status_code: 404
+                    is_success: false
+                  summary: 404 Not Found
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedResponse'
+              examples:
+                401Unauthorized:
+                  value:
+                    data: null
+                    errors:
+                      code: UNAUTHORIZED
+                      message: Unauthorized Access.
+                    status_code: 401
+                    is_success: false
+                  summary: 401 Unauthorized
+          description: ''
+    delete:
+      operationId: supplier_destroy
+      description: |-
+        Handles the object deletion process.
+
+        This method retrieves the object based on the lookup field
+        and performs soft deletion by default. It allows customization
+        of deletion behavior through the Manager class.
+
+        Args:
+            request (Request): The HTTP request containing relevant parameters.
+            **kwargs: Additional keyword arguments, including the lookup field value.
+
+        Returns:
+            Response: A success response if deletion is successful.
+
+        Raises:
+            NoDataFoundError: If the required lookup parameter is missing.
+      parameters:
+      - in: path
+        name: supplier_id
+        schema:
+          type: string
+        required: true
+      tags:
+      - Supplier
+      security:
+      - TokenAuth: []
+      - TokenAuth: []
+      - {}
+      responses:
+        '204':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+              examples:
+                DeleteSupplier-Success:
+                  value:
+                    data: null
+                    errors: null
+                    messages:
+                      message: Deleted Successfully.
+                    status_code: 204
+                    is_success: true
+                  summary: Delete Supplier - Success
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundResponse'
+              examples:
+                404NotFound:
+                  value:
+                    data: null
+                    errors:
+                      code: NO_DATA_FOUND
+                      message: No Data Found.
+                    status_code: 404
+                    is_success: false
+                  summary: 404 Not Found
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedResponse'
+              examples:
+                401Unauthorized:
+                  value:
+                    data: null
+                    errors:
+                      code: UNAUTHORIZED
+                      message: Unauthorized Access.
+                    status_code: 401
+                    is_success: false
+                  summary: 401 Unauthorized
+          description: ''
+  /api/user:
+    get:
+      operationId: user_retrieve
+      description: |-
+        Retrieve object list based query params provided in the request data.
+        Args:
+            request (Request): The HTTP request object containing the data.
+        Returns:
+            object: The list of retrieved objects if found.
+      parameters:
+      - in: query
+        name: first_name
+        schema:
+          type: string
+          minLength: 1
+      - in: query
+        name: is_pagination
+        schema:
+          type: boolean
+          default: true
+      - in: query
+        name: last_name
+        schema:
+          type: string
+          minLength: 1
+      - in: query
+        name: page
+        schema:
+          type: integer
+          minimum: 1
+          default: 1
+      - in: query
+        name: page_size
+        schema:
+          type: integer
+          minimum: 1
+          default: 10
+      tags:
+      - User
+      security:
+      - TokenAuth: []
+      - TokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserListResponse'
+              examples:
+                ListUser-Success:
+                  value:
+                    data:
+                      list:
+                      - email: user@example.com
+                        user_id: 9d018a56-abd9-4dfd-b606-80ce3ba8f53f
+                        profile_photo: https://cdn.example.com/photos/user.jpg
+                        phone_number: 9876543210
+                        first_name: John
+                        last_name: Doe
+                        full_name: John Doe
+                      pagination:
+                        count: 1
+                        page_size: 1
+                        current_page: 1
+                        total_pages: 1
+                    errors: null
+                    messages: null
+                    status_code: 200
+                    is_success: true
+                  summary: List User - Success
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundResponse'
+              examples:
+                404NotFound:
+                  value:
+                    data: null
+                    errors:
+                      code: NO_DATA_FOUND
+                      message: No Data Found.
+                    status_code: 404
+                    is_success: false
+                  summary: 404 Not Found
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedResponse'
+              examples:
+                401Unauthorized:
+                  value:
+                    data: null
+                    errors:
+                      code: UNAUTHORIZED
+                      message: Unauthorized Access.
+                    status_code: 401
+                    is_success: false
+                  summary: 401 Unauthorized
+          description: ''
+    post:
+      operationId: user_create
+      description: |-
+        Handles the object creation process, including validation, data enrichment,
+        database persistence, and response generation.
+
+        Args:
+            request (Request): The HTTP request containing input data.
+
+        Returns:
+            Response: A success response with the created object(s)
+            or an error message if validation fails.
+      tags:
+      - User
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      security:
+      - TokenAuth: []
+      - TokenAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+              examples:
+                CreateUser-Success:
+                  value:
+                    data:
+                      email: user@example.com
+                      user_id: 9d018a56-abd9-4dfd-b606-80ce3ba8f53f
+                      profile_photo: https://cdn.example.com/photos/user.jpg
+                      phone_number: 9876543210
+                      first_name: John
+                      last_name: Doe
+                      full_name: John Doe
+                    errors: null
+                    messages:
+                      message: Created Successfully.
+                    status_code: 201
+                    is_success: true
+                  summary: Create User - Success
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestResponse'
+              examples:
+                400BadRequest:
+                  value:
+                    data: null
+                    errors:
+                    - code: INVALID
+                      message: Invalid data.
+                      field: field_name
+                    status_code: 400
+                    is_success: false
+                  summary: 400 Bad Request
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedResponse'
+              examples:
+                401Unauthorized:
+                  value:
+                    data: null
+                    errors:
+                      code: UNAUTHORIZED
+                      message: Unauthorized Access.
+                    status_code: 401
+                    is_success: false
+                  summary: 401 Unauthorized
+          description: ''
+  /api/user/{user_id}:
+    get:
+      operationId: user_retrieve_2
+      description: |-
+        Retrieve an object based on the ID provided in the request data.
+        Args:
+            request (Request): The HTTP request object containing the data.
+        Returns:
+            object: The retrieved object if found.
+      parameters:
+      - in: path
+        name: user_id
+        schema:
+          type: string
+        required: true
+      tags:
+      - User
+      security:
+      - TokenAuth: []
+      - TokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+              examples:
+                GetUserById-Success:
+                  value:
+                    data:
+                      email: user@example.com
+                      user_id: 9d018a56-abd9-4dfd-b606-80ce3ba8f53f
+                      profile_photo: https://cdn.example.com/photos/user.jpg
+                      phone_number: 9876543210
+                      first_name: John
+                      last_name: Doe
+                      full_name: John Doe
+                    errors: null
+                    messages: null
+                    status_code: 200
+                    is_success: true
+                  summary: Get User by Id - Success
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundResponse'
+              examples:
+                404NotFound:
+                  value:
+                    data: null
+                    errors:
+                      code: NO_DATA_FOUND
+                      message: No Data Found.
+                    status_code: 404
+                    is_success: false
+                  summary: 404 Not Found
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedResponse'
+              examples:
+                401Unauthorized:
+                  value:
+                    data: null
+                    errors:
+                      code: UNAUTHORIZED
+                      message: Unauthorized Access.
+                    status_code: 401
+                    is_success: false
+                  summary: 401 Unauthorized
+          description: ''
+    put:
+      operationId: user_update
+      description: |-
+        Update an object based on query params and data provided in the request.
+        Args:
+            request (Request): The HTTP request object containing the data.
+        Returns:
+            object: The updated object if the update is successful.
+      parameters:
+      - in: path
+        name: user_id
+        schema:
+          type: string
+        required: true
+      tags:
+      - User
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      security:
+      - TokenAuth: []
+      - TokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+              examples:
+                UpdateUser-Success:
+                  value:
+                    data:
+                      email: user@example.com
+                      user_id: 9d018a56-abd9-4dfd-b606-80ce3ba8f53f
+                      profile_photo: https://cdn.example.com/photos/user.jpg
+                      phone_number: 9876543210
+                      first_name: John
+                      last_name: Doe
+                      full_name: John Doe
+                    errors: null
+                    messages:
+                      message: Updated Successfully.
+                    status_code: 200
+                    is_success: true
+                  summary: Update User - Success
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundResponse'
+              examples:
+                404NotFound:
+                  value:
+                    data: null
+                    errors:
+                      code: NO_DATA_FOUND
+                      message: No Data Found.
+                    status_code: 404
+                    is_success: false
+                  summary: 404 Not Found
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedResponse'
+              examples:
+                401Unauthorized:
+                  value:
+                    data: null
+                    errors:
+                      code: UNAUTHORIZED
+                      message: Unauthorized Access.
+                    status_code: 401
+                    is_success: false
+                  summary: 401 Unauthorized
+          description: ''
+    patch:
+      operationId: user_partial_update
+      description: |-
+        Update an object based on query params and data provided in the request.
+        Args:
+            request (Request): The HTTP request object containing the data.
+        Returns:
+            object: The updated object if the update is successful.
+      parameters:
+      - in: path
+        name: user_id
+        schema:
+          type: string
+        required: true
+      tags:
+      - User
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedUser'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedUser'
+      security:
+      - TokenAuth: []
+      - TokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+              examples:
+                UpdateUser-Success:
+                  value:
+                    data:
+                      email: user@example.com
+                      user_id: 9d018a56-abd9-4dfd-b606-80ce3ba8f53f
+                      profile_photo: https://cdn.example.com/photos/user.jpg
+                      phone_number: 9876543210
+                      first_name: John
+                      last_name: Doe
+                      full_name: John Doe
+                    errors: null
+                    messages:
+                      message: Updated Successfully.
+                    status_code: 200
+                    is_success: true
+                  summary: Update User - Success
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundResponse'
+              examples:
+                404NotFound:
+                  value:
+                    data: null
+                    errors:
+                      code: NO_DATA_FOUND
+                      message: No Data Found.
+                    status_code: 404
+                    is_success: false
+                  summary: 404 Not Found
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedResponse'
+              examples:
+                401Unauthorized:
+                  value:
+                    data: null
+                    errors:
+                      code: UNAUTHORIZED
+                      message: Unauthorized Access.
+                    status_code: 401
+                    is_success: false
+                  summary: 401 Unauthorized
+          description: ''
+    delete:
+      operationId: user_destroy
+      description: |-
+        Handles the object deletion process.
+
+        This method retrieves the object based on the lookup field
+        and performs soft deletion by default. It allows customization
+        of deletion behavior through the Manager class.
+
+        Args:
+            request (Request): The HTTP request containing relevant parameters.
+            **kwargs: Additional keyword arguments, including the lookup field value.
+
+        Returns:
+            Response: A success response if deletion is successful.
+
+        Raises:
+            NoDataFoundError: If the required lookup parameter is missing.
+      parameters:
+      - in: path
+        name: user_id
+        schema:
+          type: string
+        required: true
+      tags:
+      - User
+      security:
+      - TokenAuth: []
+      - TokenAuth: []
+      - {}
+      responses:
+        '204':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+              examples:
+                DeleteUser-Success:
+                  value:
+                    data: null
+                    errors: null
+                    messages:
+                      message: Deleted Successfully.
+                    status_code: 204
+                    is_success: true
+                  summary: Delete User - Success
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundResponse'
+              examples:
+                404NotFound:
+                  value:
+                    data: null
+                    errors:
+                      code: NO_DATA_FOUND
+                      message: No Data Found.
+                    status_code: 404
+                    is_success: false
+                  summary: 404 Not Found
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedResponse'
+              examples:
+                401Unauthorized:
+                  value:
+                    data: null
+                    errors:
+                      code: UNAUTHORIZED
+                      message: Unauthorized Access.
+                    status_code: 401
+                    is_success: false
+                  summary: 401 Unauthorized
+          description: ''
+  /api/user/profile:
+    get:
+      operationId: user_profile_retrieve
+      description: Retrieve the user profile information.
+      tags:
+      - User Profile
+      security:
+      - TokenAuth: []
+      - TokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+              examples:
+                GetUserById-Success:
+                  value:
+                    data:
+                      email: user@example.com
+                      user_id: 9d018a56-abd9-4dfd-b606-80ce3ba8f53f
+                      profile_photo: https://cdn.example.com/photos/user.jpg
+                      phone_number: 9876543210
+                      first_name: John
+                      last_name: Doe
+                      full_name: John Doe
+                    errors: null
+                    messages: null
+                    status_code: 200
+                    is_success: true
+                  summary: Get User by Id - Success
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundResponse'
+              examples:
+                404NotFound:
+                  value:
+                    data: null
+                    errors:
+                      code: NO_DATA_FOUND
+                      message: No Data Found.
+                    status_code: 404
+                    is_success: false
+                  summary: 404 Not Found
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedResponse'
+              examples:
+                401Unauthorized:
+                  value:
+                    data: null
+                    errors:
+                      code: UNAUTHORIZED
+                      message: Unauthorized Access.
+                    status_code: 401
+                    is_success: false
+                  summary: 401 Unauthorized
+          description: ''
+components:
+  schemas:
+    AuditLogsData:
+      type: object
+      description: Serializer for audit logs data structure.
+      properties:
+        audit_id:
+          type: string
+          description: Unique identifier for the audit log entry.
+        user_id:
+          type: string
+          description: Unique identifier of the user who performed the action.
+        module_name:
+          type: string
+          description: Name of the module where the action occurred.
+        http_method:
+          type: string
+          description: HTTP method used in the request (GET, POST, etc.).
+        request_path:
+          type: string
+          description: Full path of the request URL.
+        client_ip:
+          type: string
+          description: IP address of the client making the request.
+        client_user_agent:
+          type: string
+          description: User agent string of the client.
+        request_route:
+          type: string
+          description: Route used to access the API.
+        request_headers:
+          description: Headers included in the original request.
+      required:
+      - audit_id
+      - client_ip
+      - client_user_agent
+      - http_method
+      - module_name
+      - request_headers
+      - request_path
+      - request_route
+      - user_id
+    AuditLogsDataList:
+      type: object
+      description: Serializer for the data list of audit logs.
+      properties:
+        list:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuditLogsData'
+          description: List of audit logs.
+        pagination:
+          allOf:
+          - $ref: '#/components/schemas/Pagination'
+          description: Pagination information for the list of audit logs.
+      required:
+      - list
+      - pagination
+    AuditLogsListResponse:
+      type: object
+      description: Serializer for the response of the audit logs list endpoint.
+      properties:
+        data:
+          allOf:
+          - $ref: '#/components/schemas/AuditLogsDataList'
+          description: List of audit logs with pagination information.
+        errors:
+          nullable: true
+          description: Any errors for the response.
+        messages:
+          nullable: true
+          description: Any informational messages for the response.
+        status_code:
+          type: integer
+          default: 200
+        is_success:
+          type: boolean
+          default: true
+      required:
+      - data
+      - errors
+      - messages
+    AuditLogsResponse:
+      type: object
+      description: Serializer for the response of the audit logs list endpoint.
+      properties:
+        data:
+          allOf:
+          - $ref: '#/components/schemas/AuditLogsData'
+          description: Auditlogs information.
+        errors:
+          nullable: true
+          description: Any errors for the response.
+        messages:
+          nullable: true
+          description: Any informational messages for the response.
+        status_code:
+          type: integer
+          default: 200
+        is_success:
+          type: boolean
+          default: true
+      required:
+      - data
+      - errors
+      - messages
+    BadRequestResponse:
+      type: object
+      description: Standard response for a bad request.
+      properties:
+        data: {}
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorDetail'
+          description: List of validation or business logic errors.
+        status_code:
+          type: integer
+          default: 400
+        is_success:
+          type: boolean
+          default: false
+      required:
+      - errors
+    Category:
+      type: object
+      description: Serializer for the Category model
+      properties:
+        category_code:
+          type: string
+          maxLength: 256
+        category_name:
+          type: string
+          maxLength: 256
+      required:
+      - category_code
+      - category_name
+    CategoryData:
+      type: object
+      description: Serializer for both creating and updating a category.
+      properties:
+        category_id:
+          type: string
+          format: uuid
+          description: PK for the category
+        category_code:
+          type: string
+          description: Unique code for the category.
+        category_name:
+          type: string
+          description: Name of the category.
+      required:
+      - category_code
+      - category_id
+      - category_name
+    CategoryListData:
+      type: object
+      description: Serializer for the data field in category list response.
+      properties:
+        list:
+          type: array
+          items:
+            $ref: '#/components/schemas/CategoryData'
+          description: List of category records.
+        pagination:
+          allOf:
+          - $ref: '#/components/schemas/Pagination'
+          description: Pagination information for the list of categories.
+      required:
+      - list
+      - pagination
+    CategoryListResponse:
+      type: object
+      description: Serializer for the response of the category list endpoint.
+      properties:
+        data:
+          allOf:
+          - $ref: '#/components/schemas/CategoryListData'
+          description: Categories and pagination.
+        errors:
+          nullable: true
+          description: Any errors message for the response body.
+        messages:
+          nullable: true
+          description: Any informational messages for the response body.
+        status_code:
+          type: integer
+          default: 200
+        is_success:
+          type: boolean
+          default: true
+      required:
+      - data
+      - errors
+      - messages
+    CategoryResponse:
+      type: object
+      description: Serializer for the response of category-related endpoints.
+      properties:
+        data:
+          allOf:
+          - $ref: '#/components/schemas/CategoryData'
+          description: Category information.
+        errors:
+          nullable: true
+          description: Any errors message for the response.
+        messages:
+          nullable: true
+          description: Any informational messages for the response body.
+        status_code:
+          type: integer
+          default: 200
+        is_success:
+          type: boolean
+          default: true
+      required:
+      - data
+      - errors
+      - messages
+    ErrorDetail:
+      type: object
+      description: Standard error detail format.
+      properties:
+        code:
+          type: string
+          description: Machine-readable error code, e.g., 'DUPLICATE_ENTRY'.
+        message:
+          type: string
+          description: Human-readable error message.
+        field:
+          type: string
+          description: Field where the error occurred.
+      required:
+      - code
+      - field
+      - message
+    Login:
+      type: object
+      description: Serializer for user login.
+      properties:
+        username:
+          type: string
+          format: email
+        password:
+          type: string
+      required:
+      - password
+      - username
+    LoginResponse:
+      type: object
+      description: A serializer for handling login response data.
+      properties:
+        data:
+          allOf:
+          - $ref: '#/components/schemas/LoginTokenData'
+          description: Login data with token.
+        errors:
+          nullable: true
+          description: Any errors.
+        messages:
+          nullable: true
+          description: Informational messages.
+      required:
+      - data
+      - errors
+      - messages
+    LoginTokenData:
+      type: object
+      description: |-
+        A serializer for handling login token response data.
+        Serializes an authentication token and its creation timestamp.
+      properties:
+        token:
+          type: string
+          description: Authentication token.
+        created_dtm:
+          type: string
+          format: date-time
+          description: Token creation timestamp.
+      required:
+      - created_dtm
+      - token
+    LogoutResponse:
+      type: object
+      description: A serializer for handling logout response data.
+      properties:
+        data:
+          nullable: true
+          description: Logout data, null on success.
+        errors:
+          nullable: true
+          description: Any errors, null if none.
+        messages:
+          nullable: true
+          description: Informational messages.
+      required:
+      - data
+      - errors
+      - messages
+    MarkNotificationResponse:
+      type: object
+      description: Response serializer for mark as read operation.
+      properties:
+        data:
+          description: Read status update summary.
+        errors:
+          nullable: true
+          description: Any error messages for the response.
+        messages:
+          nullable: true
+          description: Any informational messages for the response body.
+        status_code:
+          type: integer
+          default: 200
+        is_success:
+          type: boolean
+          default: true
+      required:
+      - data
+      - errors
+      - messages
+    MovementTypeEnum:
+      enum:
+      - IN
+      - OUT
+      type: string
+      description: |-
+        * `IN` - In
+        * `OUT` - Out
+    NotFoundResponse:
+      type: object
+      description: Standard response for resource not found.
+      properties:
+        data: {}
+        errors:
+          allOf:
+          - $ref: '#/components/schemas/ErrorDetail'
+          description: Resource not found.
+        status_code:
+          type: integer
+          default: 404
+        is_success:
+          type: boolean
+          default: false
+      required:
+      - errors
+    NotificationData:
+      type: object
+      description: Serializer for individual notification content.
+      properties:
+        notification_id:
+          type: string
+          format: uuid
+        title:
+          type: string
+        message:
+          type: string
+        created_by:
+          type: string
+        notification_type:
+          type: string
+        notification_data: {}
+      required:
+      - created_by
+      - message
+      - notification_data
+      - notification_id
+      - notification_type
+      - title
+    NotificationListData:
+      type: object
+      description: Data serializer for paginated notification list response.
+      properties:
+        list:
+          type: array
+          items:
+            $ref: '#/components/schemas/NotificationListItem'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+      required:
+      - list
+      - pagination
+    NotificationListItem:
+      type: object
+      description: Serializer for a single notification list item.
+      properties:
+        created_dtm:
+          type: string
+          format: date-time
+        sent_by:
+          $ref: '#/components/schemas/SentByUser'
+        notification:
+          $ref: '#/components/schemas/NotificationData'
+      required:
+      - created_dtm
+      - notification
+      - sent_by
+    NotificationListResponse:
+      type: object
+      description: Full response serializer for list notifications.
+      properties:
+        data:
+          $ref: '#/components/schemas/NotificationListData'
+        errors:
+          nullable: true
+        messages:
+          nullable: true
+        status_code:
+          type: integer
+          default: 200
+        is_success:
+          type: boolean
+          default: true
+      required:
+      - data
+      - errors
+      - messages
+    NotificationMarkAsRead:
+      type: object
+      description: Serializer for marking notifications as read.
+      properties:
+        list_notification_id:
+          type: array
+          items:
+            type: string
+            format: uuid
+          description: List of notification IDs to mark as read.
+        mark_all_as_read:
+          type: boolean
+          default: false
+          description: Flag to indicate if all notifications should be marked as read.
+      required:
+      - list_notification_id
+    Pagination:
+      type: object
+      description: Pagination for swagger documentation.
+      properties:
+        count:
+          type: integer
+        page_size:
+          type: integer
+        current_page:
+          type: integer
+        total_pages:
+          type: integer
+      required:
+      - count
+      - current_page
+      - page_size
+      - total_pages
+    PatchedCategory:
+      type: object
+      description: Serializer for the Category model
+      properties:
+        category_code:
+          type: string
+          maxLength: 256
+        category_name:
+          type: string
+          maxLength: 256
+    PatchedProduct:
+      type: object
+      description: Serializer for the Product model
+      properties:
+        category_id:
+          type: string
+          format: uuid
+        product_code:
+          type: string
+          maxLength: 256
+        product_name:
+          type: string
+          maxLength: 256
+        sell_price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+        purchase_price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+    PatchedSupplier:
+      type: object
+      description: Serializer for the Supplier model
+      properties:
+        supplier_code:
+          type: string
+          maxLength: 256
+        supplier_name:
+          type: string
+          maxLength: 256
+    PatchedUser:
+      type: object
+      description: Serializer for both creating and updating a user.
+      properties:
+        email:
+          type: string
+          format: email
+        phone_number:
+          type: integer
+        role_id:
+          $ref: '#/components/schemas/RoleIdEnum'
+        last_name:
+          type: string
+          maxLength: 16
+        first_name:
+          type: string
+          maxLength: 16
+        profile_photo:
+          type: string
+          format: uri
+          nullable: true
+        password:
+          type: string
+          maxLength: 16
+          minLength: 4
+    PermissionListData:
+      type: object
+      description: Serializer for the data field in permission list response.
+      properties:
+        list:
+          type: array
+          items:
+            $ref: '#/components/schemas/PermissionSwagger'
+          description: List of permissions
+        pagination:
+          allOf:
+          - $ref: '#/components/schemas/Pagination'
+          description: Pagination info
+      required:
+      - list
+      - pagination
+    PermissionListResponse:
+      type: object
+      description: Serializer for the response of the permission list endpoint.
+      properties:
+        data:
+          allOf:
+          - $ref: '#/components/schemas/PermissionListData'
+          description: Paginated permissions
+        errors:
+          nullable: true
+          description: Errors, if any
+        messages:
+          nullable: true
+          description: Messages, if any
+        status_code:
+          type: integer
+          default: 200
+        is_success:
+          type: boolean
+          default: true
+      required:
+      - data
+      - errors
+      - messages
+    PermissionSwagger:
+      type: object
+      description: Serializer for both creating and updating a permission.
+      properties:
+        permission_id:
+          type: string
+          readOnly: true
+          description: Unique identifier for the permission.
+        name:
+          type: string
+          description: Permission name
+        code:
+          type: string
+          description: Permission code
+        module:
+          type: string
+          description: Module name
+        action:
+          type: string
+          description: Action this permission allows
+      required:
+      - action
+      - module
+      - name
+      - permission_id
+    Product:
+      type: object
+      description: Serializer for the Product model
+      properties:
+        category_id:
+          type: string
+          format: uuid
+        product_code:
+          type: string
+          maxLength: 256
+        product_name:
+          type: string
+          maxLength: 256
+        sell_price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+        purchase_price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+      required:
+      - category_id
+      - product_code
+      - product_name
+      - purchase_price
+      - sell_price
+    ProductData:
+      type: object
+      description: Serializer for both creating and updating a product.
+      properties:
+        product_id:
+          type: string
+          format: uuid
+          description: PK for the product.
+        product_code:
+          type: string
+          description: Unique code for the product.
+        product_name:
+          type: string
+          description: Name of the product.
+        category_id:
+          type: string
+          format: uuid
+          description: Foreign key of category.
+        sell_price:
+          type: number
+          format: double
+          description: Selling price of the product.
+        purchase_price:
+          type: number
+          format: double
+          description: Purchase price of the product.
+      required:
+      - category_id
+      - product_code
+      - product_id
+      - product_name
+      - purchase_price
+      - sell_price
+    ProductListData:
+      type: object
+      description: Serializer for the data field in product list response.
+      properties:
+        list:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductData'
+          description: List of product records.
+        pagination:
+          allOf:
+          - $ref: '#/components/schemas/Pagination'
+          description: Pagination information for the list of products.
+      required:
+      - list
+      - pagination
+    ProductListResponse:
+      type: object
+      description: Serializer for the response of the product list endpoint.
+      properties:
+        data:
+          allOf:
+          - $ref: '#/components/schemas/ProductListData'
+          description: Products and pagination.
+        errors:
+          nullable: true
+          description: Any errors message for the response body.
+        messages:
+          nullable: true
+          description: Any informational messages for the response body.
+        status_code:
+          type: integer
+          default: 200
+        is_success:
+          type: boolean
+          default: true
+      required:
+      - data
+      - errors
+      - messages
+    ProductResponse:
+      type: object
+      description: Serializer for the response of product-related endpoints.
+      properties:
+        data:
+          allOf:
+          - $ref: '#/components/schemas/ProductData'
+          description: Product information.
+        errors:
+          nullable: true
+          description: Any errors message for the response.
+        messages:
+          nullable: true
+          description: Any informational messages for the response body.
+        status_code:
+          type: integer
+          default: 200
+        is_success:
+          type: boolean
+          default: true
+      required:
+      - data
+      - errors
+      - messages
+    ReportEntry:
+      type: object
+      description: Serializer for each report entry.
+      properties:
+        movement_type:
+          allOf:
+          - $ref: '#/components/schemas/MovementTypeEnum'
+          description: |-
+            Stock movement type (IN / OUT)
+
+            * `IN` - In
+            * `OUT` - Out
+        total_quantity:
+          type: integer
+          description: Total quantity of this movement
+        product:
+          allOf:
+          - $ref: '#/components/schemas/ReportProduct'
+          description: Product details
+      required:
+      - movement_type
+      - product
+      - total_quantity
+    ReportListResponse:
+      type: object
+      description: Serializer for the report list response (without pagination).
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ReportEntry'
+          description: List of stock movement summary by product
+        errors:
+          nullable: true
+        messages:
+          nullable: true
+        status_code:
+          type: integer
+          default: 200
+        is_success:
+          type: boolean
+          default: true
+      required:
+      - data
+      - errors
+      - messages
+    ReportProduct:
+      type: object
+      description: Serializer for product data inside report entry.
+      properties:
+        product_id:
+          type: string
+          format: uuid
+        sell_price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+        category_id:
+          type: string
+          format: uuid
+        product_code:
+          type: string
+        product_name:
+          type: string
+        purchase_price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+      required:
+      - category_id
+      - product_code
+      - product_id
+      - product_name
+      - purchase_price
+      - sell_price
+    RoleIdEnum:
+      enum:
+      - SUPER_ADMIN
+      - COMPANY_ADMIN
+      - MANAGER
+      - OPERATOR
+      type: string
+      description: |-
+        * `SUPER_ADMIN` - Super Admin
+        * `COMPANY_ADMIN` - Company Admin
+        * `MANAGER` - Manager
+        * `OPERATOR` - Operator
+    RolePermission:
+      type: object
+      description: Serializer for both creating a RolePermission.
+      properties:
+        permission_id:
+          type: string
+          format: uuid
+        role_id:
+          $ref: '#/components/schemas/RoleIdEnum'
+      required:
+      - permission_id
+      - role_id
+    RolePermissionListData:
+      type: object
+      description: Serializer for RolePermission list with pagination.
+      properties:
+        list:
+          type: array
+          items:
+            $ref: '#/components/schemas/RolePermissionSwagger'
+          description: List of role-permission mappings.
+        pagination:
+          description: Pagination info.
+      required:
+      - list
+      - pagination
+    RolePermissionListResponse:
+      type: object
+      description: Response wrapper for RolePermission list.
+      properties:
+        data:
+          allOf:
+          - $ref: '#/components/schemas/RolePermissionListData'
+          description: List of RolePermission with pagination.
+        errors:
+          nullable: true
+          description: Errors if any.
+        messages:
+          nullable: true
+          description: Messages if any.
+        status_code:
+          type: integer
+          default: 200
+        is_success:
+          type: boolean
+          default: true
+      required:
+      - data
+      - errors
+      - messages
+    RolePermissionResponse:
+      type: object
+      description: Response wrapper for RolePermission single object.
+      properties:
+        data:
+          allOf:
+          - $ref: '#/components/schemas/RolePermissionSwagger'
+          description: Role-Permission mapping information.
+        errors:
+          nullable: true
+          description: Errors if any.
+        messages:
+          nullable: true
+          description: Messages if any.
+        status_code:
+          type: integer
+          default: 200
+        is_success:
+          type: boolean
+          default: true
+      required:
+      - data
+      - errors
+      - messages
+    RolePermissionSwagger:
+      type: object
+      description: Serializer for both creating a RolePermission.
+      properties:
+        role_id:
+          allOf:
+          - $ref: '#/components/schemas/RoleIdEnum'
+          description: |-
+            Role choice.
+
+            * `SUPER_ADMIN` - Super Admin
+            * `COMPANY_ADMIN` - Company Admin
+            * `MANAGER` - Manager
+            * `OPERATOR` - Operator
+        permission_id:
+          type: string
+          format: uuid
+          description: Permission UUID.
+      required:
+      - permission_id
+      - role_id
+    SentByUser:
+      type: object
+      description: Serializer for the user who sent the notification.
+      properties:
+        email:
+          type: string
+          format: email
+        user_id:
+          type: string
+          format: uuid
+        role_id:
+          type: string
+        phone_number:
+          type: string
+        profile_photo:
+          type: string
+          nullable: true
+        last_name:
+          type: string
+        first_name:
+          type: string
+        full_name:
+          type: string
+      required:
+      - email
+      - first_name
+      - full_name
+      - last_name
+      - phone_number
+      - profile_photo
+      - role_id
+      - user_id
+    Stock:
+      type: object
+      description: Serializer for the Stock model
+      properties:
+        product_id:
+          type: string
+          format: uuid
+        supplier_id:
+          type: string
+          format: uuid
+          nullable: true
+        price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+        movement_type:
+          $ref: '#/components/schemas/MovementTypeEnum'
+        quantity:
+          type: integer
+          minimum: 1
+      required:
+      - movement_type
+      - price
+      - product_id
+      - quantity
+    StockData:
+      type: object
+      description: Serializer for creating and updating stock records.
+      properties:
+        stock_id:
+          type: string
+          format: uuid
+          description: PK for the stock record.
+        product_id:
+          type: string
+          format: uuid
+          description: UUID of the product.
+        supplier_id:
+          type: string
+          format: uuid
+          nullable: true
+          description: UUID of the supplier (nullable).
+        price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+          description: Unit price of the stock.
+        movement_type:
+          allOf:
+          - $ref: '#/components/schemas/MovementTypeEnum'
+          description: |-
+            Type of stock movement (IN/OUT).
+
+            * `IN` - In
+            * `OUT` - Out
+        quantity:
+          type: integer
+          minimum: 1
+          description: Quantity of the stock item.
+      required:
+      - movement_type
+      - price
+      - product_id
+      - quantity
+      - stock_id
+    StockListData:
+      type: object
+      description: Serializer for the data field in stock list response.
+      properties:
+        list:
+          type: array
+          items:
+            $ref: '#/components/schemas/StockData'
+          description: List of stock records.
+        pagination:
+          allOf:
+          - $ref: '#/components/schemas/Pagination'
+          description: Pagination information for the list of stocks.
+      required:
+      - list
+      - pagination
+    StockListResponse:
+      type: object
+      description: Serializer for the response of the stock list endpoint.
+      properties:
+        data:
+          allOf:
+          - $ref: '#/components/schemas/StockListData'
+          description: Stocks and pagination.
+        errors:
+          nullable: true
+          description: Any errors message for the response body.
+        messages:
+          nullable: true
+          description: Any informational messages for the response body.
+        status_code:
+          type: integer
+          default: 200
+        is_success:
+          type: boolean
+          default: true
+      required:
+      - data
+      - errors
+      - messages
+    StockResponse:
+      type: object
+      description: Serializer for the response of stock-related endpoints.
+      properties:
+        data:
+          allOf:
+          - $ref: '#/components/schemas/StockData'
+          description: Stock information.
+        errors:
+          nullable: true
+          description: Any errors message for the response.
+        messages:
+          nullable: true
+          description: Any informational messages for the response body.
+        status_code:
+          type: integer
+          default: 200
+        is_success:
+          type: boolean
+          default: true
+      required:
+      - data
+      - errors
+      - messages
+    SuccessResponse:
+      type: object
+      description: Standard response for successful requests.
+      properties:
+        data: {}
+        messages:
+          type: object
+          additionalProperties: {}
+          nullable: true
+          description: Any informational messages for the response.
+        status_code:
+          type: integer
+          default: 200
+        is_success:
+          type: boolean
+          default: true
+      required:
+      - messages
+    Supplier:
+      type: object
+      description: Serializer for the Supplier model
+      properties:
+        supplier_code:
+          type: string
+          maxLength: 256
+        supplier_name:
+          type: string
+          maxLength: 256
+      required:
+      - supplier_code
+      - supplier_name
+    SupplierData:
+      type: object
+      description: Serializer for both creating and updating a supplier.
+      properties:
+        supplier_id:
+          type: string
+          format: uuid
+          description: PK for the supplier.
+        supplier_code:
+          type: string
+          description: Unique code for the supplier.
+        supplier_name:
+          type: string
+          description: Name of the supplier.
+      required:
+      - supplier_code
+      - supplier_id
+      - supplier_name
+    SupplierListData:
+      type: object
+      description: Serializer for the data field in supplier list response.
+      properties:
+        list:
+          type: array
+          items:
+            $ref: '#/components/schemas/SupplierData'
+          description: List of supplier records.
+        pagination:
+          allOf:
+          - $ref: '#/components/schemas/Pagination'
+          description: Pagination information for the list of suppliers.
+      required:
+      - list
+      - pagination
+    SupplierListResponse:
+      type: object
+      description: Serializer for the response of the supplier list endpoint.
+      properties:
+        data:
+          allOf:
+          - $ref: '#/components/schemas/SupplierListData'
+          description: Suppliers and pagination.
+        errors:
+          nullable: true
+          description: Any errors message for the response body.
+        messages:
+          nullable: true
+          description: Any informational messages for the response body.
+        status_code:
+          type: integer
+          default: 200
+        is_success:
+          type: boolean
+          default: true
+      required:
+      - data
+      - errors
+      - messages
+    SupplierResponse:
+      type: object
+      description: Serializer for the response of supplier-related endpoints.
+      properties:
+        data:
+          allOf:
+          - $ref: '#/components/schemas/SupplierData'
+          description: Supplier information.
+        errors:
+          nullable: true
+          description: Any errors message for the response.
+        messages:
+          nullable: true
+          description: Any informational messages for the response body.
+        status_code:
+          type: integer
+          default: 200
+        is_success:
+          type: boolean
+          default: true
+      required:
+      - data
+      - errors
+      - messages
+    UnauthorizedResponse:
+      type: object
+      description: Standard response for unauthorized access.
+      properties:
+        data: {}
+        errors:
+          allOf:
+          - $ref: '#/components/schemas/ErrorDetail'
+          description: Unauthorized
+        status_code:
+          type: integer
+          default: 401
+        is_success:
+          type: boolean
+          default: false
+      required:
+      - errors
+    User:
+      type: object
+      description: Serializer for both creating and updating a user.
+      properties:
+        email:
+          type: string
+          format: email
+        phone_number:
+          type: integer
+        role_id:
+          $ref: '#/components/schemas/RoleIdEnum'
+        last_name:
+          type: string
+          maxLength: 16
+        first_name:
+          type: string
+          maxLength: 16
+        profile_photo:
+          type: string
+          format: uri
+          nullable: true
+        password:
+          type: string
+          maxLength: 16
+          minLength: 4
+      required:
+      - email
+      - first_name
+      - last_name
+      - password
+      - phone_number
+      - role_id
+    UserData:
+      type: object
+      description: Serializer for both creating and updating a user.
+      properties:
+        user_id:
+          type: string
+          format: uuid
+          description: PK for user model
+        email:
+          type: string
+          format: email
+          description: User's email address.
+        profile_photo:
+          type: string
+          description: URL or path to the user's profile photo.
+        phone_number:
+          type: integer
+          description: User's phone number.
+        last_name:
+          type: string
+          description: User's last name.
+          maxLength: 16
+        first_name:
+          type: string
+          description: User's first name.
+          maxLength: 16
+      required:
+      - email
+      - first_name
+      - last_name
+      - phone_number
+      - user_id
+    UserListData:
+      type: object
+      description: Serializer for the data field in user list response.
+      properties:
+        list:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserData'
+          description: List of user records.
+        pagination:
+          allOf:
+          - $ref: '#/components/schemas/Pagination'
+          description: Pagination information for the list of users.
+      required:
+      - list
+      - pagination
+    UserListResponse:
+      type: object
+      description: Serializer for the response of the user list endpoint.
+      properties:
+        data:
+          allOf:
+          - $ref: '#/components/schemas/UserListData'
+          description: Users and pagination.
+        errors:
+          nullable: true
+          description: Any errors message for the response body.
+        messages:
+          nullable: true
+          description: Any informational messages for the response body.
+        status_code:
+          type: integer
+          default: 200
+        is_success:
+          type: boolean
+          default: true
+      required:
+      - data
+      - errors
+      - messages
+    UserResponse:
+      type: object
+      description: Serializer for the response of user-related endpoints.
+      properties:
+        data:
+          allOf:
+          - $ref: '#/components/schemas/UserData'
+          description: ' User Information.'
+        errors:
+          nullable: true
+          description: Any errors message for the response.
+        messages:
+          nullable: true
+          description: Any informational messages for the response body.
+        status_code:
+          type: integer
+          default: 200
+        is_success:
+          type: boolean
+          default: true
+      required:
+      - data
+      - errors
+      - messages
+  securitySchemes:
+    TokenAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: Token

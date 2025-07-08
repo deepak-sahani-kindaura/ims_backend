@@ -1,0 +1,23 @@
+{
+    "ENV": "TEST",
+    "PROJECT_NAME": "IMS",
+    "DEBUG": false,
+    "DISABLE_PRINT": false,
+    "ALLOWED_HOSTS": [
+        ".testserver",
+        "testserver"
+    ],
+    "DATABASES": {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": "default.sqlite3"
+        }
+    },
+    "CACHES": {
+        "default": {
+            "BACKEND": "django.core.cache.backends.memcached.PyLibMCCache",
+            "LOCATION": "localhost:11211",
+            "TIMEOUT": 300
+        }
+    }
+}

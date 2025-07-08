@@ -1,0 +1,2146 @@
+openapi: 3.0.3
+info:
+  title: Inventory Management System(IMS)
+  version: V0.0.0
+  description: This Django-based Inventory Management System (IMS) is a scalable,
+    multi-tenant backend application built to manage inventory operations across  multiple
+    tenants. It supports fine-grained access control, optimized API routing, and production-ready
+    deployment with Docker and Nginx.
+paths:
+  /api/admin/permission:
+    get:
+      operationId: admin_permission_retrieve
+      description: Get the list of permissions and modules
+      parameters:
+      - in: query
+        name: tenant_id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - Permission
+      security:
+      - TokenAuth: []
+      - TokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PermissionListResponse'
+              examples:
+                ListPermissions-Success:
+                  value:
+                    data:
+                    - name: View User
+                      code: view_user
+                      module: User
+                      action: view
+                      permission_id: 9d018a56-abd9-4dfd-b606-80ce3ba8f53f
+                    errors: null
+                    messages: null
+                    status_code: 200
+                    is_success: true
+                  summary: List Permissions - Success
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundResponse'
+              examples:
+                404NotFound:
+                  value:
+                    data: null
+                    errors:
+                      code: NO_DATA_FOUND
+                      message: No Data Found.
+                    status_code: 404
+                    is_success: false
+                  summary: 404 Not Found
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedResponse'
+              examples:
+                401Unauthorized:
+                  value:
+                    data: null
+                    errors:
+                      code: UNAUTHORIZED
+                      message: Unauthorized Access.
+                    status_code: 401
+                    is_success: false
+                  summary: 401 Unauthorized
+          description: ''
+    post:
+      operationId: admin_permission_create
+      description: |-
+        Handles the object creation process, including validation, data enrichment,
+        database persistence, and response generation.
+
+        Args:
+            request (Request): The HTTP request containing input data.
+
+        Returns:
+            Response: A success response with the created object(s)
+            or an error message if validation fails.
+      parameters:
+      - in: query
+        name: tenant_id
+        schema:
+          type: string
+          format: uuid
+      tags:
+      - Permission
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PermissionListQuery'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PermissionListQuery'
+        required: true
+      security:
+      - TokenAuth: []
+      - TokenAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+              examples:
+                CreatePermission-Success:
+                  value:
+                    data: null
+                    errors: null
+                    messages:
+                      message: Created Successfully.
+                    status_code: 201
+                    is_success: true
+                  summary: Create Permission - Success
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundResponse'
+              examples:
+                404NotFound:
+                  value:
+                    data: null
+                    errors:
+                      code: NO_DATA_FOUND
+                      message: No Data Found.
+                    status_code: 404
+                    is_success: false
+                  summary: 404 Not Found
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedResponse'
+              examples:
+                401Unauthorized:
+                  value:
+                    data: null
+                    errors:
+                      code: UNAUTHORIZED
+                      message: Unauthorized Access.
+                    status_code: 401
+                    is_success: false
+                  summary: 401 Unauthorized
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestResponse'
+          description: ''
+  /api/auth/admin/login:
+    post:
+      operationId: auth_admin_login_create
+      description: |-
+        Handles the object creation process, including validation, data enrichment,
+        database persistence, and response generation.
+
+        Args:
+            request (Request): The HTTP request containing input data.
+
+        Returns:
+            Response: A success response with the created object(s)
+            or an error message if validation fails.
+      tags:
+      - Authentication
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Login'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Login'
+        required: true
+      security:
+      - TokenAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+              examples:
+                LoginSuccessful:
+                  value:
+                    data:
+                      token: BABD5D130CB04C05717D5D22635BBE4D
+                      created_dtm: '2025-04-18T07:25:20.135018Z'
+                    errors: null
+                    messages:
+                      message: Logged in successful.
+                    status_code: 201
+                    is_success: true
+                  summary: Login Successful
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedResponse'
+              examples:
+                401WrongCredentials:
+                  value:
+                    data: null
+                    errors:
+                      code: UNAUTHORIZED
+                      message: Unauthorized Access.
+                    status_code: 401
+                    is_success: false
+                  summary: 401 WrongCredentials
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestResponse'
+              examples:
+                400BadRequest:
+                  value:
+                    data: null
+                    errors:
+                    - code: INVALID
+                      message: Invalid data.
+                      field: field_name
+                    status_code: 400
+                    is_success: false
+                  summary: 400 Bad Request
+          description: ''
+  /api/auth/admin/logout:
+    delete:
+      operationId: auth_admin_logout_destroy
+      description: Handle user logout by deleting the token associated with the user.
+      tags:
+      - Authentication
+      security:
+      - TokenAuth: []
+      - TokenAuth: []
+      - {}
+      responses:
+        '204':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LogoutResponse'
+              examples:
+                LogoutSuccessful:
+                  value:
+                    data: null
+                    errors: null
+                    messages:
+                      message: Logged out successfully.
+                    status_code: 204
+                    is_success: true
+                  summary: Logout Successful
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedResponse'
+              examples:
+                401WrongCredentials:
+                  value:
+                    data: null
+                    errors:
+                      code: UNAUTHORIZED
+                      message: Unauthorized Access.
+                    status_code: 401
+                    is_success: false
+                  summary: 401 WrongCredentials
+          description: ''
+  /api/health:
+    get:
+      operationId: health_retrieve
+      description: This API will return the system health details.
+      tags:
+      - Monitor
+      security:
+      - TokenAuth: []
+      - TokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SysInfoResponse'
+          description: ''
+  /api/tenant:
+    get:
+      operationId: tenant_retrieve
+      description: |-
+        Retrieve object list based query params provided in the request data.
+        Args:
+            request (Request): The HTTP request object containing the data.
+        Returns:
+            object: The list of retrieved objects if found.
+      parameters:
+      - in: query
+        name: is_pagination
+        schema:
+          type: boolean
+          default: true
+      - in: query
+        name: page
+        schema:
+          type: integer
+          minimum: 1
+          default: 1
+      - in: query
+        name: page_size
+        schema:
+          type: integer
+          minimum: 1
+          default: 10
+      - in: query
+        name: tenant_code
+        schema:
+          type: string
+          maxLength: 256
+          minLength: 1
+      - in: query
+        name: tenant_name
+        schema:
+          type: string
+          maxLength: 256
+          minLength: 1
+      tags:
+      - Tenant
+      security:
+      - TokenAuth: []
+      - TokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TenantListResponse'
+              examples:
+                ListTenant-Success:
+                  value:
+                    data:
+                      list:
+                      - tenant_id: f2e92c48-42c2-4a84-a5df-128471fba810
+                        tenant_code: NEOSOFT
+                        tenant_name: NeoSoft Technologies
+                      pagination:
+                        count: 1
+                        page_size: 1
+                        current_page: 1
+                        total_pages: 1
+                    errors: null
+                    messages: null
+                    status_code: 200
+                    is_success: true
+                  summary: List Tenant - Success
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundResponse'
+              examples:
+                404NotFound:
+                  value:
+                    data: null
+                    errors:
+                      code: NO_DATA_FOUND
+                      message: No Data Found.
+                    status_code: 404
+                    is_success: false
+                  summary: 404 Not Found
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedResponse'
+              examples:
+                401Unauthorized:
+                  value:
+                    data: null
+                    errors:
+                      code: UNAUTHORIZED
+                      message: Unauthorized Access.
+                    status_code: 401
+                    is_success: false
+                  summary: 401 Unauthorized
+          description: ''
+    post:
+      operationId: tenant_create
+      description: |-
+        Handles the object creation process, including validation, data enrichment,
+        database persistence, and response generation.
+
+        Args:
+            request (Request): The HTTP request containing input data.
+
+        Returns:
+            Response: A success response with the created object(s)
+            or an error message if validation fails.
+      tags:
+      - Tenant
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Tenant'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Tenant'
+        required: true
+      security:
+      - TokenAuth: []
+      - TokenAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TenantResponse'
+              examples:
+                CreateTenant-Success:
+                  value:
+                    data:
+                      tenant_id: f2e92c48-42c2-4a84-a5df-128471fba810
+                      tenant_code: NEOSOFT
+                      tenant_name: NeoSoft Technologies
+                    errors: null
+                    messages:
+                      message: Created Successfully.
+                    status_code: 201
+                    is_success: true
+                  summary: Create Tenant - Success
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestResponse'
+              examples:
+                400BadRequest:
+                  value:
+                    data: null
+                    errors:
+                    - code: INVALID
+                      message: Invalid data.
+                      field: field_name
+                    status_code: 400
+                    is_success: false
+                  summary: 400 Bad Request
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedResponse'
+              examples:
+                401Unauthorized:
+                  value:
+                    data: null
+                    errors:
+                      code: UNAUTHORIZED
+                      message: Unauthorized Access.
+                    status_code: 401
+                    is_success: false
+                  summary: 401 Unauthorized
+          description: ''
+  /api/tenant/{tenant_code}/details:
+    get:
+      operationId: tenant_details_retrieve
+      description: |-
+        Retrieve an object based on the ID provided in the request data.
+        Args:
+            request (Request): The HTTP request object containing the data.
+        Returns:
+            object: The retrieved object if found.
+      parameters:
+      - in: path
+        name: tenant_code
+        schema:
+          type: string
+        required: true
+      tags:
+      - Tenant Details
+      security:
+      - TokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TenantDomainConfigResponse'
+              examples:
+                GetTenantDomainConfigurationById-Success:
+                  value:
+                    data:
+                      host: localhost:8000
+                      base_path: api
+                      sub_domain: ami
+                      api_host: http://ami.localhost:8000
+                    errors: null
+                    messages: null
+                    status_code: 200
+                    is_success: true
+                  summary: Get Tenant Domain Configuration by Id - Success
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundResponse'
+              examples:
+                404NotFound:
+                  value:
+                    data: null
+                    errors:
+                      code: NO_DATA_FOUND
+                      message: No Data Found.
+                    status_code: 404
+                    is_success: false
+                  summary: 404 Not Found
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedResponse'
+              examples:
+                401Unauthorized:
+                  value:
+                    data: null
+                    errors:
+                      code: UNAUTHORIZED
+                      message: Unauthorized Access.
+                    status_code: 401
+                    is_success: false
+                  summary: 401 Unauthorized
+          description: ''
+  /api/tenant/{tenant_id}:
+    get:
+      operationId: tenant_retrieve_2
+      description: |-
+        Retrieve an object based on the ID provided in the request data.
+        Args:
+            request (Request): The HTTP request object containing the data.
+        Returns:
+            object: The retrieved object if found.
+      parameters:
+      - in: path
+        name: tenant_id
+        schema:
+          type: string
+        required: true
+      tags:
+      - Tenant
+      security:
+      - TokenAuth: []
+      - TokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TenantResponse'
+              examples:
+                GetTenantById-Success:
+                  value:
+                    data:
+                      tenant_id: f2e92c48-42c2-4a84-a5df-128471fba810
+                      tenant_code: NEOSOFT
+                      tenant_name: NeoSoft Technologies
+                    errors: null
+                    messages: null
+                    status_code: 200
+                    is_success: true
+                  summary: Get Tenant by Id - Success
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundResponse'
+              examples:
+                404NotFound:
+                  value:
+                    data: null
+                    errors:
+                      code: NO_DATA_FOUND
+                      message: No Data Found.
+                    status_code: 404
+                    is_success: false
+                  summary: 404 Not Found
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedResponse'
+              examples:
+                401Unauthorized:
+                  value:
+                    data: null
+                    errors:
+                      code: UNAUTHORIZED
+                      message: Unauthorized Access.
+                    status_code: 401
+                    is_success: false
+                  summary: 401 Unauthorized
+          description: ''
+    put:
+      operationId: tenant_update
+      description: |-
+        Update an object based on query params and data provided in the request.
+        Args:
+            request (Request): The HTTP request object containing the data.
+        Returns:
+            object: The updated object if the update is successful.
+      parameters:
+      - in: path
+        name: tenant_id
+        schema:
+          type: string
+        required: true
+      tags:
+      - Tenant
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Tenant'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Tenant'
+        required: true
+      security:
+      - TokenAuth: []
+      - TokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TenantResponse'
+              examples:
+                UpdateTenant-Success:
+                  value:
+                    data:
+                      tenant_id: f2e92c48-42c2-4a84-a5df-128471fba810
+                      tenant_code: NEOSOFT
+                      tenant_name: NeoSoft Technologies
+                    errors: null
+                    messages:
+                      message: Updated Successfully.
+                    status_code: 200
+                    is_success: true
+                  summary: Update Tenant - Success
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestResponse'
+              examples:
+                400BadRequest:
+                  value:
+                    data: null
+                    errors:
+                    - code: INVALID
+                      message: Invalid data.
+                      field: field_name
+                    status_code: 400
+                    is_success: false
+                  summary: 400 Bad Request
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundResponse'
+              examples:
+                404NotFound:
+                  value:
+                    data: null
+                    errors:
+                      code: NO_DATA_FOUND
+                      message: No Data Found.
+                    status_code: 404
+                    is_success: false
+                  summary: 404 Not Found
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedResponse'
+              examples:
+                401Unauthorized:
+                  value:
+                    data: null
+                    errors:
+                      code: UNAUTHORIZED
+                      message: Unauthorized Access.
+                    status_code: 401
+                    is_success: false
+                  summary: 401 Unauthorized
+          description: ''
+    patch:
+      operationId: tenant_partial_update
+      description: |-
+        Update an object based on query params and data provided in the request.
+        Args:
+            request (Request): The HTTP request object containing the data.
+        Returns:
+            object: The updated object if the update is successful.
+      parameters:
+      - in: path
+        name: tenant_id
+        schema:
+          type: string
+        required: true
+      tags:
+      - Tenant
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedTenant'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedTenant'
+      security:
+      - TokenAuth: []
+      - TokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TenantResponse'
+              examples:
+                UpdateTenant-Success:
+                  value:
+                    data:
+                      tenant_id: f2e92c48-42c2-4a84-a5df-128471fba810
+                      tenant_code: NEOSOFT
+                      tenant_name: NeoSoft Technologies
+                    errors: null
+                    messages:
+                      message: Updated Successfully.
+                    status_code: 200
+                    is_success: true
+                  summary: Update Tenant - Success
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestResponse'
+              examples:
+                400BadRequest:
+                  value:
+                    data: null
+                    errors:
+                    - code: INVALID
+                      message: Invalid data.
+                      field: field_name
+                    status_code: 400
+                    is_success: false
+                  summary: 400 Bad Request
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundResponse'
+              examples:
+                404NotFound:
+                  value:
+                    data: null
+                    errors:
+                      code: NO_DATA_FOUND
+                      message: No Data Found.
+                    status_code: 404
+                    is_success: false
+                  summary: 404 Not Found
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedResponse'
+              examples:
+                401Unauthorized:
+                  value:
+                    data: null
+                    errors:
+                      code: UNAUTHORIZED
+                      message: Unauthorized Access.
+                    status_code: 401
+                    is_success: false
+                  summary: 401 Unauthorized
+          description: ''
+    delete:
+      operationId: tenant_destroy
+      description: |-
+        Handles the object deletion process.
+
+        This method retrieves the object based on the lookup field
+        and performs soft deletion by default. It allows customization
+        of deletion behavior through the Manager class.
+
+        Args:
+            request (Request): The HTTP request containing relevant parameters.
+            **kwargs: Additional keyword arguments, including the lookup field value.
+
+        Returns:
+            Response: A success response if deletion is successful.
+
+        Raises:
+            NoDataFoundError: If the required lookup parameter is missing.
+      parameters:
+      - in: path
+        name: tenant_id
+        schema:
+          type: string
+        required: true
+      tags:
+      - Tenant
+      security:
+      - TokenAuth: []
+      - TokenAuth: []
+      - {}
+      responses:
+        '204':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+              examples:
+                DeleteTenant-Success:
+                  value:
+                    data: null
+                    errors: null
+                    messages:
+                      message: Deleted Successfully.
+                    status_code: 204
+                    is_success: true
+                  summary: Delete Tenant - Success
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundResponse'
+              examples:
+                404NotFound:
+                  value:
+                    data: null
+                    errors:
+                      code: NO_DATA_FOUND
+                      message: No Data Found.
+                    status_code: 404
+                    is_success: false
+                  summary: 404 Not Found
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedResponse'
+              examples:
+                401Unauthorized:
+                  value:
+                    data: null
+                    errors:
+                      code: UNAUTHORIZED
+                      message: Unauthorized Access.
+                    status_code: 401
+                    is_success: false
+                  summary: 401 Unauthorized
+          description: ''
+  /api/tenant/{tenant_id}/configuration:
+    get:
+      operationId: tenant_configuration_retrieve
+      description: |-
+        Retrieve an object based on the ID provided in the request data.
+        Args:
+            request (Request): The HTTP request object containing the data.
+        Returns:
+            object: The retrieved object if found.
+      parameters:
+      - in: path
+        name: tenant_id
+        schema:
+          type: string
+        required: true
+      tags:
+      - Tenant Configuration
+      security:
+      - TokenAuth: []
+      - TokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TenantConfigurationResponse'
+              examples:
+                GetTenantConfigurationById-Success:
+                  value:
+                    data:
+                      database_strategy: SHARED
+                      authentication_type: JWT_TOKEN
+                      database_server: SQLITE
+                      database_config:
+                        username: tenant_user
+                        password: secure_password
+                        host: localhost
+                        port: 5432
+                        database_name: tenant_db
+                        options: null
+                    errors: null
+                    messages: null
+                    status_code: 200
+                    is_success: true
+                  summary: Get Tenant Configuration by Id - Success
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundResponse'
+              examples:
+                404NotFound:
+                  value:
+                    data: null
+                    errors:
+                      code: NO_DATA_FOUND
+                      message: No Data Found.
+                    status_code: 404
+                    is_success: false
+                  summary: 404 Not Found
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedResponse'
+              examples:
+                401Unauthorized:
+                  value:
+                    data: null
+                    errors:
+                      code: UNAUTHORIZED
+                      message: Unauthorized Access.
+                    status_code: 401
+                    is_success: false
+                  summary: 401 Unauthorized
+          description: ''
+    post:
+      operationId: tenant_configuration_create
+      description: |-
+        Handles the object creation process, including validation, data enrichment,
+        database persistence, and response generation.
+
+        Args:
+            request (Request): The HTTP request containing input data.
+
+        Returns:
+            Response: A success response with the created object(s)
+            or an error message if validation fails.
+      parameters:
+      - in: path
+        name: tenant_id
+        schema:
+          type: string
+        required: true
+      tags:
+      - Tenant Configuration
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TenantConfigurationData'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TenantConfigurationData'
+        required: true
+      security:
+      - TokenAuth: []
+      - TokenAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TenantConfigurationResponse'
+              examples:
+                CreateTenantConfiguration-Success:
+                  value:
+                    data:
+                      database_strategy: SHARED
+                      authentication_type: JWT_TOKEN
+                      database_server: SQLITE
+                      database_config:
+                        username: tenant_user
+                        password: secure_password
+                        host: localhost
+                        port: 5432
+                        database_name: tenant_db
+                        options: null
+                    errors: null
+                    messages:
+                      message: Created Successfully.
+                    status_code: 201
+                    is_success: true
+                  summary: Create Tenant Configuration - Success
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestResponse'
+              examples:
+                400BadRequest:
+                  value:
+                    data: null
+                    errors:
+                    - code: INVALID
+                      message: Invalid data.
+                      field: field_name
+                    status_code: 400
+                    is_success: false
+                  summary: 400 Bad Request
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedResponse'
+              examples:
+                401Unauthorized:
+                  value:
+                    data: null
+                    errors:
+                      code: UNAUTHORIZED
+                      message: Unauthorized Access.
+                    status_code: 401
+                    is_success: false
+                  summary: 401 Unauthorized
+          description: ''
+  /api/user/company-admin:
+    get:
+      operationId: user_company_admin_retrieve
+      description: |-
+        Retrieve object list based query params provided in the request data.
+        Args:
+            request (Request): The HTTP request object containing the data.
+        Returns:
+            object: The list of retrieved objects if found.
+      parameters:
+      - in: query
+        name: first_name
+        schema:
+          type: string
+          minLength: 1
+      - in: query
+        name: is_pagination
+        schema:
+          type: boolean
+          default: true
+      - in: query
+        name: last_name
+        schema:
+          type: string
+          minLength: 1
+      - in: query
+        name: page
+        schema:
+          type: integer
+          minimum: 1
+          default: 1
+      - in: query
+        name: page_size
+        schema:
+          type: integer
+          minimum: 1
+          default: 10
+      - in: query
+        name: role_id
+        schema:
+          enum:
+          - SUPER_ADMIN
+          - COMPANY_ADMIN
+          - MANAGER
+          - OPERATOR
+          type: string
+          default: COMPANY_ADMIN
+          minLength: 1
+        description: |-
+          * `SUPER_ADMIN` - Super Admin
+          * `COMPANY_ADMIN` - Company Admin
+          * `MANAGER` - Manager
+          * `OPERATOR` - Operator
+      - in: query
+        name: tenant_id
+        schema:
+          type: string
+          format: uuid
+      tags:
+      - User
+      security:
+      - TokenAuth: []
+      - TokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserListResponse'
+              examples:
+                ListUser-Success:
+                  value:
+                    data:
+                      list:
+                      - email: user@example.com
+                        user_id: 9d018a56-abd9-4dfd-b606-80ce3ba8f53f
+                        profile_photo: https://cdn.example.com/photos/user.jpg
+                        phone_number: 9876543210
+                        first_name: John
+                        last_name: Doe
+                        full_name: John Doe
+                      pagination:
+                        count: 1
+                        page_size: 1
+                        current_page: 1
+                        total_pages: 1
+                    errors: null
+                    messages: null
+                    status_code: 200
+                    is_success: true
+                  summary: List User - Success
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundResponse'
+              examples:
+                404NotFound:
+                  value:
+                    data: null
+                    errors:
+                      code: NO_DATA_FOUND
+                      message: No Data Found.
+                    status_code: 404
+                    is_success: false
+                  summary: 404 Not Found
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedResponse'
+              examples:
+                401Unauthorized:
+                  value:
+                    data: null
+                    errors:
+                      code: UNAUTHORIZED
+                      message: Unauthorized Access.
+                    status_code: 401
+                    is_success: false
+                  summary: 401 Unauthorized
+          description: ''
+    post:
+      operationId: user_company_admin_create
+      description: |-
+        Handles the object creation process, including validation, data enrichment,
+        database persistence, and response generation.
+
+        Args:
+            request (Request): The HTTP request containing input data.
+
+        Returns:
+            Response: A success response with the created object(s)
+            or an error message if validation fails.
+      tags:
+      - User
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserCompanyAdmin'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UserCompanyAdmin'
+        required: true
+      security:
+      - TokenAuth: []
+      - TokenAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+              examples:
+                CreateUser-Success:
+                  value:
+                    data:
+                      email: user@example.com
+                      user_id: 9d018a56-abd9-4dfd-b606-80ce3ba8f53f
+                      profile_photo: https://cdn.example.com/photos/user.jpg
+                      phone_number: 9876543210
+                      first_name: John
+                      last_name: Doe
+                      full_name: John Doe
+                    errors: null
+                    messages:
+                      message: Created Successfully.
+                    status_code: 201
+                    is_success: true
+                  summary: Create User - Success
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestResponse'
+              examples:
+                400BadRequest:
+                  value:
+                    data: null
+                    errors:
+                    - code: INVALID
+                      message: Invalid data.
+                      field: field_name
+                    status_code: 400
+                    is_success: false
+                  summary: 400 Bad Request
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedResponse'
+              examples:
+                401Unauthorized:
+                  value:
+                    data: null
+                    errors:
+                      code: UNAUTHORIZED
+                      message: Unauthorized Access.
+                    status_code: 401
+                    is_success: false
+                  summary: 401 Unauthorized
+          description: ''
+  /api/user/super-admin/profile:
+    get:
+      operationId: user_super_admin_profile_retrieve
+      description: Retrieve the user profile information.
+      tags:
+      - User Profile
+      security:
+      - TokenAuth: []
+      - TokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+              examples:
+                GetUserById-Success:
+                  value:
+                    data:
+                      email: user@example.com
+                      user_id: 9d018a56-abd9-4dfd-b606-80ce3ba8f53f
+                      profile_photo: https://cdn.example.com/photos/user.jpg
+                      phone_number: 9876543210
+                      first_name: John
+                      last_name: Doe
+                      full_name: John Doe
+                    errors: null
+                    messages: null
+                    status_code: 200
+                    is_success: true
+                  summary: Get User by Id - Success
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundResponse'
+              examples:
+                404NotFound:
+                  value:
+                    data: null
+                    errors:
+                      code: NO_DATA_FOUND
+                      message: No Data Found.
+                    status_code: 404
+                    is_success: false
+                  summary: 404 Not Found
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedResponse'
+              examples:
+                401Unauthorized:
+                  value:
+                    data: null
+                    errors:
+                      code: UNAUTHORIZED
+                      message: Unauthorized Access.
+                    status_code: 401
+                    is_success: false
+                  summary: 401 Unauthorized
+          description: ''
+components:
+  schemas:
+    AuthenticationTypeEnum:
+      enum:
+      - TOKEN
+      - JWT_TOKEN
+      type: string
+      description: |-
+        * `TOKEN` - Token
+        * `JWT_TOKEN` - JWT Token
+    BadRequestResponse:
+      type: object
+      description: Standard response for a bad request.
+      properties:
+        data: {}
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorDetail'
+          description: List of validation or business logic errors.
+        status_code:
+          type: integer
+          default: 400
+        is_success:
+          type: boolean
+          default: false
+      required:
+      - errors
+    CPUInfo:
+      type: object
+      description: Serializer for CPU-related system information.
+      properties:
+        percent_per_core:
+          type: string
+          description: CPU usage percentage per core.
+        percent_total:
+          type: string
+          description: Total CPU usage percentage.
+        count_logical:
+          type: integer
+          description: Total number of logical CPU cores.
+        count_physical:
+          type: integer
+          description: Total number of physical CPU cores.
+        frequency_current:
+          type: string
+          description: Current CPU frequency in MHz.
+        frequency_min:
+          type: string
+          description: Minimum CPU frequency in MHz.
+        frequency_max:
+          type: string
+          description: Maximum CPU frequency in MHz.
+        times_user:
+          type: string
+          description: Total time CPU spent in user mode (in seconds).
+        times_system:
+          type: string
+          description: Total time CPU spent in system mode (in seconds).
+        times_idle:
+          type: string
+          description: Total time CPU spent in idle state (in seconds).
+      required:
+      - count_logical
+      - count_physical
+      - frequency_current
+      - frequency_max
+      - frequency_min
+      - percent_per_core
+      - percent_total
+      - times_idle
+      - times_system
+      - times_user
+    DatabaseConfig:
+      type: object
+      properties:
+        password:
+          type: string
+        username:
+          type: string
+        host:
+          type: string
+        port:
+          type: integer
+        options:
+          nullable: true
+        database_name:
+          type: string
+          nullable: true
+      required:
+      - host
+      - password
+      - port
+      - username
+    DatabaseServerEnum:
+      enum:
+      - SQLITE
+      - POSTGRES
+      type: string
+      description: |-
+        * `SQLITE` - Sqlite3
+        * `POSTGRES` - Postgres
+    DatabaseStrategyEnum:
+      enum:
+      - SHARED
+      - SEPARATE
+      type: string
+      description: |-
+        * `SHARED` - Shared DB
+        * `SEPARATE` - Separate DB
+    DiskInfo:
+      type: object
+      description: Serializer for Disk-related system information.
+      properties:
+        total:
+          type: string
+          description: Total disk space available.
+        used:
+          type: string
+          description: Total disk space used.
+        free:
+          type: string
+          description: Total disk space free.
+        percent:
+          type: string
+          description: Percentage of disk space used.
+        read_count:
+          type: integer
+          description: Number of disk read operations.
+        write_count:
+          type: integer
+          description: Number of disk write operations.
+      required:
+      - free
+      - percent
+      - read_count
+      - total
+      - used
+      - write_count
+    ErrorDetail:
+      type: object
+      description: Standard error detail format.
+      properties:
+        code:
+          type: string
+          description: Machine-readable error code, e.g., 'DUPLICATE_ENTRY'.
+        message:
+          type: string
+          description: Human-readable error message.
+        field:
+          type: string
+          description: Field where the error occurred.
+      required:
+      - code
+      - field
+      - message
+    Login:
+      type: object
+      description: Serializer for user login.
+      properties:
+        username:
+          type: string
+          format: email
+        password:
+          type: string
+      required:
+      - password
+      - username
+    LoginResponse:
+      type: object
+      description: A serializer for handling login response data.
+      properties:
+        data:
+          allOf:
+          - $ref: '#/components/schemas/LoginTokenData'
+          description: Login data with token.
+        errors:
+          nullable: true
+          description: Any errors.
+        messages:
+          nullable: true
+          description: Informational messages.
+      required:
+      - data
+      - errors
+      - messages
+    LoginTokenData:
+      type: object
+      description: |-
+        A serializer for handling login token response data.
+        Serializes an authentication token and its creation timestamp.
+      properties:
+        token:
+          type: string
+          description: Authentication token.
+        created_dtm:
+          type: string
+          format: date-time
+          description: Token creation timestamp.
+      required:
+      - created_dtm
+      - token
+    LogoutResponse:
+      type: object
+      description: A serializer for handling logout response data.
+      properties:
+        data:
+          nullable: true
+          description: Logout data, null on success.
+        errors:
+          nullable: true
+          description: Any errors, null if none.
+        messages:
+          nullable: true
+          description: Informational messages.
+      required:
+      - data
+      - errors
+      - messages
+    MemoryInfo:
+      type: object
+      description: Serializer for Memory-related system information.
+      properties:
+        percent:
+          type: string
+          description: Percentage of memory used.
+        total:
+          type: string
+          description: Total system memory (GB and MB).
+        used:
+          type: string
+          description: Memory currently in use (GB and MB).
+        free:
+          type: string
+          description: Memory currently free (GB and MB).
+        available:
+          type: string
+          description: Memory available for use (GB and MB).
+      required:
+      - available
+      - free
+      - percent
+      - total
+      - used
+    NotFoundResponse:
+      type: object
+      description: Standard response for resource not found.
+      properties:
+        data: {}
+        errors:
+          allOf:
+          - $ref: '#/components/schemas/ErrorDetail'
+          description: Resource not found.
+        status_code:
+          type: integer
+          default: 404
+        is_success:
+          type: boolean
+          default: false
+      required:
+      - errors
+    Pagination:
+      type: object
+      description: Pagination for swagger documentation.
+      properties:
+        count:
+          type: integer
+        page_size:
+          type: integer
+        current_page:
+          type: integer
+        total_pages:
+          type: integer
+      required:
+      - count
+      - current_page
+      - page_size
+      - total_pages
+    PatchedTenant:
+      type: object
+      description: Serializer for the Tenant model
+      properties:
+        tenant_code:
+          type: string
+          maxLength: 256
+        tenant_name:
+          type: string
+          maxLength: 256
+    PermissionListData:
+      type: object
+      description: Serializer for the data field in permission list response.
+      properties:
+        list:
+          type: array
+          items:
+            $ref: '#/components/schemas/PermissionSwagger'
+          description: List of permissions
+        pagination:
+          allOf:
+          - $ref: '#/components/schemas/Pagination'
+          description: Pagination info
+      required:
+      - list
+      - pagination
+    PermissionListQuery:
+      type: object
+      description: Serializer for querying permission lists based on tenant ID.
+      properties:
+        tenant_id:
+          type: string
+          format: uuid
+      required:
+      - tenant_id
+    PermissionListResponse:
+      type: object
+      description: Serializer for the response of the permission list endpoint.
+      properties:
+        data:
+          allOf:
+          - $ref: '#/components/schemas/PermissionListData'
+          description: Paginated permissions
+        errors:
+          nullable: true
+          description: Errors, if any
+        messages:
+          nullable: true
+          description: Messages, if any
+        status_code:
+          type: integer
+          default: 200
+        is_success:
+          type: boolean
+          default: true
+      required:
+      - data
+      - errors
+      - messages
+    PermissionSwagger:
+      type: object
+      description: Serializer for both creating and updating a permission.
+      properties:
+        permission_id:
+          type: string
+          readOnly: true
+          description: Unique identifier for the permission.
+        name:
+          type: string
+          description: Permission name
+        code:
+          type: string
+          description: Permission code
+        module:
+          type: string
+          description: Module name
+        action:
+          type: string
+          description: Action this permission allows
+      required:
+      - action
+      - module
+      - name
+      - permission_id
+    RoleIdEnum:
+      enum:
+      - SUPER_ADMIN
+      - COMPANY_ADMIN
+      - MANAGER
+      - OPERATOR
+      type: string
+      description: |-
+        * `SUPER_ADMIN` - Super Admin
+        * `COMPANY_ADMIN` - Company Admin
+        * `MANAGER` - Manager
+        * `OPERATOR` - Operator
+    SuccessResponse:
+      type: object
+      description: Standard response for successful requests.
+      properties:
+        data: {}
+        messages:
+          type: object
+          additionalProperties: {}
+          nullable: true
+          description: Any informational messages for the response.
+        status_code:
+          type: integer
+          default: 200
+        is_success:
+          type: boolean
+          default: true
+      required:
+      - messages
+    SysInfoData:
+      type: object
+      description: Serializer for overall system information, including CPU, Disk,
+        and Memory details.
+      properties:
+        cpu:
+          allOf:
+          - $ref: '#/components/schemas/CPUInfo'
+          description: CPU-related system information.
+        disk:
+          allOf:
+          - $ref: '#/components/schemas/DiskInfo'
+          description: Disk-related system information.
+        memory:
+          allOf:
+          - $ref: '#/components/schemas/MemoryInfo'
+          description: Memory-related system information.
+      required:
+      - cpu
+      - disk
+      - memory
+    SysInfoResponse:
+      type: object
+      description: Serializer for the system information API response.
+      properties:
+        data:
+          allOf:
+          - $ref: '#/components/schemas/SysInfoData'
+          description: System information data containing CPU, Disk, and Memory details.
+        errors:
+          nullable: true
+          description: Any errors encountered during data retrieval.
+        messages:
+          nullable: true
+          description: Any informational messages.
+        status_code:
+          type: integer
+          description: HTTP status code of the response.
+        is_success:
+          type: boolean
+          description: Indicates whether the request was successful.
+      required:
+      - data
+      - errors
+      - is_success
+      - messages
+      - status_code
+    Tenant:
+      type: object
+      description: Serializer for the Tenant model
+      properties:
+        tenant_code:
+          type: string
+          maxLength: 256
+        tenant_name:
+          type: string
+          maxLength: 256
+      required:
+      - tenant_code
+      - tenant_name
+    TenantConfigurationData:
+      type: object
+      description: Serializer for creating and updating tenant configuration.
+      properties:
+        authentication_type:
+          allOf:
+          - $ref: '#/components/schemas/AuthenticationTypeEnum'
+          description: |-
+            Authentication type (e.g., password, SAML, OIDC).
+
+            * `TOKEN` - Token
+            * `JWT_TOKEN` - JWT Token
+        database_strategy:
+          allOf:
+          - $ref: '#/components/schemas/DatabaseStrategyEnum'
+          default: SHARED
+          description: |-
+            Database Strategy type (e.g., Shared DB, Separate DB).
+
+            * `SHARED` - Shared DB
+            * `SEPARATE` - Separate DB
+        database_server:
+          allOf:
+          - $ref: '#/components/schemas/DatabaseServerEnum'
+          default: SQLITE
+          description: |-
+            Choose the Database server (e.g., Sqlite3, PostgresDB, MySQL DB).
+
+            * `SQLITE` - Sqlite3
+            * `POSTGRES` - Postgres
+        database_config:
+          $ref: '#/components/schemas/DatabaseConfig'
+      required:
+      - authentication_type
+    TenantConfigurationResponse:
+      type: object
+      description: Serializer for the response of tenant configuration endpoints.
+      properties:
+        data:
+          allOf:
+          - $ref: '#/components/schemas/TenantConfigurationData'
+          description: Tenant configuration information.
+        errors:
+          nullable: true
+          description: Any errors message for the response.
+        messages:
+          nullable: true
+          description: Any informational messages for the response body.
+        status_code:
+          type: integer
+          default: 200
+        is_success:
+          type: boolean
+          default: true
+      required:
+      - data
+      - errors
+      - messages
+    TenantData:
+      type: object
+      description: Serializer for both creating and updating a tenant.
+      properties:
+        tenant_id:
+          type: string
+          format: uuid
+          description: PK for the tenant.
+        tenant_code:
+          type: string
+          description: Unique code for the tenant.
+          maxLength: 256
+        tenant_name:
+          type: string
+          description: Name of the tenant.
+          maxLength: 256
+      required:
+      - tenant_code
+      - tenant_id
+      - tenant_name
+    TenantDomainConfig:
+      type: object
+      description: Serializer for tenant domain configuration data.
+      properties:
+        host:
+          type: string
+          description: Full host with port (e.g., localhost:8000).
+        base_path:
+          type: string
+          description: Base API path (e.g., api).
+        sub_domain:
+          type: string
+          description: Subdomain name (e.g., ami).
+        api_host:
+          type: string
+          description: Full API host URL including scheme (e.g., http://ami.localhost:8000).
+      required:
+      - api_host
+      - base_path
+      - host
+      - sub_domain
+    TenantDomainConfigResponse:
+      type: object
+      description: Response serializer for tenant domain configuration endpoints.
+      properties:
+        data:
+          allOf:
+          - $ref: '#/components/schemas/TenantDomainConfig'
+          description: Tenant domain configuration information.
+        errors:
+          nullable: true
+          description: Any error messages for the response.
+        messages:
+          nullable: true
+          description: Any informational messages for the response body.
+        status_code:
+          type: integer
+          default: 200
+        is_success:
+          type: boolean
+          default: true
+      required:
+      - data
+      - errors
+      - messages
+    TenantListData:
+      type: object
+      description: Serializer for the data field in tenant list response.
+      properties:
+        list:
+          type: array
+          items:
+            $ref: '#/components/schemas/TenantData'
+          description: List of tenant records.
+        pagination:
+          allOf:
+          - $ref: '#/components/schemas/Pagination'
+          description: Pagination information for the list of tenants.
+      required:
+      - list
+      - pagination
+    TenantListResponse:
+      type: object
+      description: Serializer for the response of the tenant list endpoint.
+      properties:
+        data:
+          allOf:
+          - $ref: '#/components/schemas/TenantListData'
+          description: Tenants and pagination.
+        errors:
+          nullable: true
+          description: Any errors message for the response body.
+        messages:
+          nullable: true
+          description: Any informational messages for the response body.
+        status_code:
+          type: integer
+          default: 200
+        is_success:
+          type: boolean
+          default: true
+      required:
+      - data
+      - errors
+      - messages
+    TenantResponse:
+      type: object
+      description: Serializer for the response of tenant-related endpoints.
+      properties:
+        data:
+          allOf:
+          - $ref: '#/components/schemas/TenantData'
+          description: Tenant information.
+        errors:
+          nullable: true
+          description: Any errors message for the response.
+        messages:
+          nullable: true
+          description: Any informational messages for the response body.
+        status_code:
+          type: integer
+          default: 200
+        is_success:
+          type: boolean
+          default: true
+      required:
+      - data
+      - errors
+      - messages
+    UnauthorizedResponse:
+      type: object
+      description: Standard response for unauthorized access.
+      properties:
+        data: {}
+        errors:
+          allOf:
+          - $ref: '#/components/schemas/ErrorDetail'
+          description: Unauthorized
+        status_code:
+          type: integer
+          default: 401
+        is_success:
+          type: boolean
+          default: false
+      required:
+      - errors
+    UserCompanyAdmin:
+      type: object
+      description: Serializer for both creating and updating a user.
+      properties:
+        email:
+          type: string
+          format: email
+        phone_number:
+          type: integer
+        role_id:
+          allOf:
+          - $ref: '#/components/schemas/RoleIdEnum'
+          default: COMPANY_ADMIN
+        last_name:
+          type: string
+          maxLength: 16
+        first_name:
+          type: string
+          maxLength: 16
+        profile_photo:
+          type: string
+          format: uri
+          nullable: true
+        password:
+          type: string
+          maxLength: 16
+          minLength: 4
+        tenant_id:
+          type: string
+          format: uuid
+      required:
+      - email
+      - first_name
+      - last_name
+      - password
+      - phone_number
+      - tenant_id
+    UserData:
+      type: object
+      description: Serializer for both creating and updating a user.
+      properties:
+        user_id:
+          type: string
+          format: uuid
+          description: PK for user model
+        email:
+          type: string
+          format: email
+          description: User's email address.
+        profile_photo:
+          type: string
+          description: URL or path to the user's profile photo.
+        phone_number:
+          type: integer
+          description: User's phone number.
+        last_name:
+          type: string
+          description: User's last name.
+          maxLength: 16
+        first_name:
+          type: string
+          description: User's first name.
+          maxLength: 16
+      required:
+      - email
+      - first_name
+      - last_name
+      - phone_number
+      - user_id
+    UserListData:
+      type: object
+      description: Serializer for the data field in user list response.
+      properties:
+        list:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserData'
+          description: List of user records.
+        pagination:
+          allOf:
+          - $ref: '#/components/schemas/Pagination'
+          description: Pagination information for the list of users.
+      required:
+      - list
+      - pagination
+    UserListResponse:
+      type: object
+      description: Serializer for the response of the user list endpoint.
+      properties:
+        data:
+          allOf:
+          - $ref: '#/components/schemas/UserListData'
+          description: Users and pagination.
+        errors:
+          nullable: true
+          description: Any errors message for the response body.
+        messages:
+          nullable: true
+          description: Any informational messages for the response body.
+        status_code:
+          type: integer
+          default: 200
+        is_success:
+          type: boolean
+          default: true
+      required:
+      - data
+      - errors
+      - messages
+    UserResponse:
+      type: object
+      description: Serializer for the response of user-related endpoints.
+      properties:
+        data:
+          allOf:
+          - $ref: '#/components/schemas/UserData'
+          description: ' User Information.'
+        errors:
+          nullable: true
+          description: Any errors message for the response.
+        messages:
+          nullable: true
+          description: Any informational messages for the response body.
+        status_code:
+          type: integer
+          default: 200
+        is_success:
+          type: boolean
+          default: true
+      required:
+      - data
+      - errors
+      - messages
+  securitySchemes:
+    TokenAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: Token

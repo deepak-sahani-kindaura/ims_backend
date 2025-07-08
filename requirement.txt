@@ -1,0 +1,33 @@
+# Django web framework
+Django==5.0.13
+
+# Django Rest framework for API
+djangorestframework==3.15.2
+
+# For monitoring
+psutil==7.0.0
+
+# For static analysis of the code
+pylint==3.3.6
+pylint_django==2.6.1
+
+# Swagger Documentation(OpenAPI 3.0)
+drf-spectacular==0.28.0
+drf-spectacular-sidecar==2025.3.1
+
+# for encoding and decoding the JWT Access Token
+PyJWT==2.10.1
+
+
+# for the Memcached
+pylibmc==1.6.3
+
+# To run the app using gunicorn + NgNix
+gunicorn==23.0.0
+
+
+# for CORS
+django-cors-headers==4.7.0
+
+# for the psycopg2
+psycopg2-binary==2.9.10
